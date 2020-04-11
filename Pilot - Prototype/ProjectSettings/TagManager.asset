@@ -9,6 +9,7 @@ TagManager:
   - Sprint
   - Ragdoll
   - Balance
+  - Ladder
   layers:
   - Default
   - TransparentFX

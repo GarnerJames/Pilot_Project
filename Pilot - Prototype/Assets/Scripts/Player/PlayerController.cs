@@ -21,14 +21,13 @@ public class PlayerController : MonoBehaviour
     public bool sneaking = false;
     public bool sprinting = false;
 
-    bool facingRight;
-
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         controller.enabled = true;
+
         ani = GetComponent<Animator>();
         ani.enabled = true;
     }
