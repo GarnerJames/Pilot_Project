@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     Animator ani;
 
     private Vector3 moveDirection;
+
     public bool sneaking = false;
     public bool sprinting = false;
 
