@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.tag == ("Gravity"))
         {
-            gravityScale = 0.1f;
+            gravityScale = 0.2f;
         }
 
         if (other.tag == ("Sneak"))
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.tag == ("Gravity"))
         {
-            gravityScale = 1f;
+            gravityScale = 0.9f;
         }
 
         if (other.tag == ("Sneak"))

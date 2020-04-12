@@ -565,9 +565,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 6
   sprintSpeed: 8
-  sneakSpeed: 4
+  sneakSpeed: 5
   jumpHeight: 7
-  gravityScale: 1
+  gravityScale: 0.9
   col: {fileID: 3182946472217608755}
   controller: {fileID: 3182946472217608756}
   sneaking: 0
