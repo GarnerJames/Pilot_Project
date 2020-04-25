@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     public bool sneaking = false;
     public bool sprinting = false;
+    public bool moving = false;
 
 
     // Start is called before the first frame update
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
             moveDirection.y = 0f;
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 moveDirection.y = jumpHeight;
                 ani.SetBool("Jump", true);
@@ -71,14 +72,18 @@ public class PlayerController : MonoBehaviour
 
         ani.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.localScale = new Vector3(1, 1, 1);
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
         }
 
     }
