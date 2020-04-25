@@ -71,6 +71,16 @@ public class PlayerController : MonoBehaviour
 
         ani.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
     }
 
     void OnTriggerEnter(Collider other)
