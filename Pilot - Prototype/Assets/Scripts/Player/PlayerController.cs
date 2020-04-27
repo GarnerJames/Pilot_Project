@@ -11,29 +11,25 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight;
     public float gravityScale;
 
-    public CapsuleCollider col;
-
     public CharacterController controller;
-    Animator ani;
+
+    Animator animator;
 
     private Vector3 moveDirection;
 
     public bool sneaking = false;
     public bool sprinting = false;
-    public bool moving = false;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         controller.enabled = true;
-
-        ani = GetComponent<Animator>();
-        ani.enabled = true;
+        animator = GetComponent<Animator>();
+        animator.enabled = true;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
 
@@ -42,13 +38,13 @@ public class PlayerController : MonoBehaviour
         if (sneaking == true)
         {
             moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
-            ani.SetBool("sneaking", true);
+            animator.SetBool("sneaking", true);
         }
 
         if (sprinting == true)
         {
             moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
-            ani.SetBool("running", true);
+            animator.SetBool("running", true);
         }
 
         if (controller.isGrounded)
@@ -59,18 +55,18 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 moveDirection.y = jumpHeight;
-                ani.SetBool("Jump", true);
+                animator.SetBool("Jump", true);
             }
             else
             {
-                ani.SetBool("Jump", false);
+                animator.SetBool("Jump", false);
             }
         }
 
         moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
         controller.Move(moveDirection * Time.deltaTime);
 
-        ani.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
+        animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
         if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
         {
@@ -107,14 +103,13 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == ("Ragdoll"))
         {
-            ani.enabled = false;
+            animator.enabled = false;
             controller.enabled = false;
-            col.enabled = false;
         }
 
         if (other.tag == ("Balance"))
         {
-            ani.SetBool("Balance", true);
+            animator.SetBool("Balance", true);
         }
 
     }
@@ -129,18 +124,18 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Sneak"))
         {
             sneaking = false;
-            ani.SetBool("sneaking", false);
+            animator.SetBool("sneaking", false);
         }
 
         if (other.tag == ("Sprint"))
         {
             sprinting = false;
-            ani.SetBool("running", false);
+            animator.SetBool("running", false);
         }
 
         if (other.tag == ("Balance"))
         {
-            ani.SetBool("Balance", false);
+            animator.SetBool("Balance", false);
         }
     }
 

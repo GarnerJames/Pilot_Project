@@ -11,6 +11,7 @@ TagManager:
   - Balance
   - Ladder
   - Look
+  - Walkable
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - PostProcessing
   - Ground
-  - 
+  - Player
   - 
   - 
   - 
