@@ -10,6 +10,7 @@ TagManager:
   - Ragdoll
   - Balance
   - Ladder
+  - Look
   layers:
   - Default
   - TransparentFX

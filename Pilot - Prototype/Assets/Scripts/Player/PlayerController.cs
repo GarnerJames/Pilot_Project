@@ -37,17 +37,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        moveDirection = new Vector3(Input.GetAxis("Horizontal") * runSpeed, moveDirection.y, 0);
+        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
         if (sneaking == true)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal") * sneakSpeed, moveDirection.y, 0);
+            moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
             ani.SetBool("sneaking", true);
         }
 
         if (sprinting == true)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal") * sprintSpeed, moveDirection.y, 0);
+            moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
             ani.SetBool("running", true);
         }
 
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                transform.localScale = new Vector3(1, 1, -1);
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
