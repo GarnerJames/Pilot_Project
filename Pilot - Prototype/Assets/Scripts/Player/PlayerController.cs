@@ -33,22 +33,22 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
-
-        if (sneaking == true)
-        {
-            moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
-            animator.SetBool("sneaking", true);
-        }
-
-        if (sprinting == true)
-        {
-            moveDirection = new Vector3(0 , moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
-            animator.SetBool("running", true);
-        }
-
         if (controller.isGrounded)
         {
+
+            moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
+
+            if (sneaking == true)
+            {
+                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
+                animator.SetBool("sneaking", true);
+            }
+
+            if (sprinting == true)
+            {
+                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
+                animator.SetBool("running", true);
+            }
 
             moveDirection.y = 0f;
 
