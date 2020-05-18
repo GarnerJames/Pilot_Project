@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     public bool sneaking = false;
     public bool sprinting = false;
+    public bool falling = false;
+    public bool jumping = false;
 
 
     void Start()
@@ -55,12 +57,12 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 moveDirection.y = jumpHeight;
-                animator.SetBool("Jump", true);
+                animator.SetTrigger("Jump");
             }
-            else
-            {
-                animator.SetBool("Jump", false);
-            }
+
+            falling = false;
+            jumping = false;
+
         }
 
         moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
@@ -68,18 +70,40 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
-        if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
+
+        if (controller.velocity.y < -0.5f)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                transform.localScale = new Vector3(1, 1, -1);
-            }
+            falling = true;
+        }
 
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
+        if (controller.velocity.y > 0.5f)
+        {
+            jumping = true;
+        }
 
+        if (!falling && !jumping)
+        {
+            if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    transform.localScale = new Vector3(1, 1, -1);
+                }
+
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+            }
+        }
+
+        if (falling)
+        {
+            animator.SetBool("Falling", true);
+        }
+        else
+        {
+            animator.SetBool("Falling", false);
         }
 
     }
