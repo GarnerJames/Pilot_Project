@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger("Jump");
             }
 
+            if (controller.velocity.y < -5f)
+            {
+                animator.SetTrigger("Land");
+            }
+
             falling = false;
             jumping = false;
 
@@ -71,7 +76,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
 
-        if (controller.velocity.y < -0.5f)
+        if (controller.velocity.y < -1f)
         {
             falling = true;
         }
