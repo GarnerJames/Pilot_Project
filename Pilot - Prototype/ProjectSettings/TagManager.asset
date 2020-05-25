@@ -12,6 +12,9 @@ TagManager:
   - Ladder
   - Look
   - Walkable
+  - Wall
+  - Enemy
+  - Climb
   layers:
   - Default
   - TransparentFX
@@ -24,7 +27,7 @@ TagManager:
   - PostProcessing
   - Ground
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 

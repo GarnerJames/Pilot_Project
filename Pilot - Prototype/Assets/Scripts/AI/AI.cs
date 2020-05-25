@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
 
     public GameObject Player;
 
-    Animator mobani;
+    //Animator mobani;
 
     public float mobDistanceRun = 11f;
 
@@ -18,7 +18,7 @@ public class AI : MonoBehaviour
     void Start()
     {
         Mob = GetComponent<NavMeshAgent>();
-        mobani = GetComponent<Animator>();
+        //mobani = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class AI : MonoBehaviour
 
             Mob.SetDestination(newPos);
 
-            mobani.SetBool("running", true);
+            //mobani.SetBool("running", true);
         }
     }
 }

@@ -9,7 +9,13 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeed;
     public float sneakSpeed;
     public float jumpHeight;
+    public float doubleJump;
+    public float jumpNumber;
     public float gravityScale;
+    public float fallingSpeed;
+    public float attackRange = 0.5f;
+
+    public LayerMask enemyLayer;
 
     public CharacterController controller;
 
@@ -21,6 +27,13 @@ public class PlayerController : MonoBehaviour
     public bool sprinting = false;
     public bool falling = false;
     public bool jumping = false;
+    public bool canJump = true;
+    public bool canAttack = true;
+
+    public GameObject sneakingCam;
+    public GameObject runningCam;
+
+    public Transform attackPoint;
 
 
     void Start()
@@ -54,21 +67,38 @@ public class PlayerController : MonoBehaviour
 
             moveDirection.y = 0f;
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                moveDirection.y = jumpHeight;
-                animator.SetTrigger("Jump");
-            }
+            animator.SetBool("Falling", false);
+            animator.SetTrigger("Land");
+            animator.SetBool("Jumping", false);
 
-            if (controller.velocity.y < -5f)
-            {
-                animator.SetTrigger("Land");
-            }
+            jumpNumber = doubleJump;
 
             falling = false;
             jumping = false;
 
+            if (Input.GetKeyDown(KeyCode.LeftControl) && canAttack)
+            {
+                Attack();
+            }
+
         }
+
+
+        if (jumpNumber > 0)
+        {
+            if (canJump && !falling)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    moveDirection.y = jumpHeight;
+                    animator.SetBool("Jumping", true);
+                    animator.SetBool("Falling", false);
+                    jumpNumber = jumpNumber - 1;
+                    falling = false;
+                }
+            }
+        }
+       
 
         moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
         controller.Move(moveDirection * Time.deltaTime);
@@ -76,9 +106,10 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
 
-        if (controller.velocity.y < -1f)
+        if (controller.velocity.y < fallingSpeed)
         {
             falling = true;
+            
         }
 
         if (controller.velocity.y > 0.5f)
@@ -106,11 +137,28 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Falling", true);
         }
-        else
-        {
-            animator.SetBool("Falling", false);
-        }
 
+    }
+
+    void Attack()
+    {
+        animator.SetTrigger("Attack");
+
+        Collider [] hitEnemys = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider enemy in hitEnemys)
+        {
+            enemy.GetComponent<EnemyDamage>().TakeDamage();
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     void OnTriggerEnter(Collider other)
@@ -123,11 +171,15 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Sneak"))
         {
             sneaking = true;
+            canJump = false;
+            sneakingCam.SetActive(true);
+            
         }
 
         if (other.tag == ("Sprint"))
         {
             sprinting = true;
+            runningCam.SetActive(true);
         }
 
         if (other.tag == ("Ragdoll"))
@@ -139,6 +191,11 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", true);
+        }
+
+        if (other.tag == ("Wall"))
+        {
+            animator.SetBool("Wall", true);
         }
 
     }
@@ -153,18 +210,27 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Sneak"))
         {
             sneaking = false;
+            canJump = true;
             animator.SetBool("sneaking", false);
+            sneakingCam.SetActive(false);
+            
         }
 
         if (other.tag == ("Sprint"))
         {
             sprinting = false;
             animator.SetBool("running", false);
+            runningCam.SetActive(false);
         }
 
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", false);
+        }
+
+        if (other.tag == ("Wall"))
+        {
+            animator.SetBool("Wall", false);
         }
     }
 
