@@ -11,7 +11,7 @@ public class Door_Open : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.RightControl))
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 ani.SetTrigger("Open");
             }

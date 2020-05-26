@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             falling = false;
             jumping = false;
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && canAttack)
+            if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
             {
                 Attack();
             }

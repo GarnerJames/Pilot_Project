@@ -16,7 +16,7 @@ public class LadderClimb : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.RightControl))
+        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.DownArrow))
         {
             player.transform.position = locationTo.transform.position;
         }

@@ -14,7 +14,7 @@ public class DoorOpen : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.RightControl))
+        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.DownArrow))
         {
             animator.SetTrigger("Open");
         }

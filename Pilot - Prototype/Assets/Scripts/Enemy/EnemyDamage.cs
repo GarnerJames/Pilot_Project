@@ -25,7 +25,7 @@ public class EnemyDamage : MonoBehaviour
 
     void Die()
     {
-        animator.enabled = false;
+        animator.SetBool("Die", true);   
         col.enabled = false;
         light.SetActive(false);
     }
