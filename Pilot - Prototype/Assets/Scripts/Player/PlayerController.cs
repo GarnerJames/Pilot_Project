@@ -68,7 +68,9 @@ public class PlayerController : MonoBehaviour
             moveDirection.y = 0f;
 
             animator.SetBool("Falling", false);
+
             animator.SetTrigger("Land");
+
             animator.SetBool("Jumping", false);
 
             jumpNumber = doubleJump;
@@ -146,9 +148,9 @@ public class PlayerController : MonoBehaviour
 
         Collider [] hitEnemys = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
 
-        foreach (Collider enemy in hitEnemys)
+        foreach (Collider Enemy_Ragdol in hitEnemys)
         {
-            enemy.GetComponent<EnemyDamage>().TakeDamage();
+            Enemy_Ragdol.GetComponent<EnemyDamage>().TakeDamage();
         }
     }
 

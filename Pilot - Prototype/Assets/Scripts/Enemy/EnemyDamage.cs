@@ -5,20 +5,17 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
 
-    public Rigidbody rb;
+    Animator animator;
 
-    public Animator ani;
+    BoxCollider col;
 
-    public GameObject spotLight;
-
-    public float sideForce;
-    public float backForce;
-    public float upForce;
+    public GameObject light;
 
     private void Start()
     {
-        //box.enabled = false;
-        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+
+        col = GetComponent<BoxCollider>();
     }
 
     public void TakeDamage()
@@ -28,10 +25,8 @@ public class EnemyDamage : MonoBehaviour
 
     void Die()
     {
-        ani.enabled = false;
-
-        spotLight.SetActive(false);
-
-        rb.AddForce(sideForce, upForce, backForce, ForceMode.VelocityChange);
+        animator.enabled = false;
+        col.enabled = false;
+        light.SetActive(false);
     }
 }
