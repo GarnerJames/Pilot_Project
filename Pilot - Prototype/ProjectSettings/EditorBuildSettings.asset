@@ -9,15 +9,18 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/Menu.unity
-    guid: 3c58f659bf050004a8fb92c7c353550c
-  - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Exposition.unity
+    guid: 5a82d3fe098735246a485f2ce185e8fe
+  - enabled: 1
     path: Assets/Scenes/Character.unity
     guid: ebc9badbcadf9ce46b920fce7742684b
-  - enabled: 1
-    path: Assets/Scenes/2.5D Prototype.unity
-    guid: ca4c79232525c244ca488d7f6a66c97b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

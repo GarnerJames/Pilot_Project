@@ -148,10 +148,11 @@ public class PlayerController : MonoBehaviour
 
         Collider [] hitEnemys = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
 
-        foreach (Collider Enemy_Ragdol in hitEnemys)
+        foreach (Collider Enemy in hitEnemys)
         {
-            Enemy_Ragdol.GetComponent<EnemyDamage>().TakeDamage();
+            Enemy.GetComponent<EnemyDamage>().TakeDamage();
         }
+
     }
 
     private void OnDrawGizmosSelected()
@@ -198,6 +199,11 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Wall"))
         {
             animator.SetBool("Wall", true);
+        }
+
+        if (other.tag == ("Slide") && sprinting == true)
+        {
+            animator.SetTrigger("Slide");
         }
 
     }

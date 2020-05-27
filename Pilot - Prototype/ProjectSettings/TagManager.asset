@@ -15,6 +15,7 @@ TagManager:
   - Wall
   - Enemy
   - Climb
+  - Slide
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Ground
   - Player
   - Enemy
-  - 
+  - NoCol
   - 
   - 
   - 

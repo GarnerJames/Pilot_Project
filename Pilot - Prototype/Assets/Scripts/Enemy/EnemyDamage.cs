@@ -28,5 +28,6 @@ public class EnemyDamage : MonoBehaviour
         animator.SetBool("Die", true);   
         col.enabled = false;
         light.SetActive(false);
+        gameObject.layer = LayerMask.NameToLayer("NoCol");
     }
 }
