@@ -30,9 +30,6 @@ public class PlayerController : MonoBehaviour
     public bool canJump = true;
     public bool canAttack = true;
 
-    public GameObject sneakingCam;
-    public GameObject runningCam;
-
     public Transform attackPoint;
 
 
@@ -133,6 +130,12 @@ public class PlayerController : MonoBehaviour
                     transform.localScale = new Vector3(1, 1, 1);
                 }
             }
+
+        }
+
+        if (transform.position.x != 0)
+        {
+            transform.position = new Vector3(0, transform.position.y, transform.position.z);
         }
 
         if (falling)
@@ -175,14 +178,11 @@ public class PlayerController : MonoBehaviour
         {
             sneaking = true;
             canJump = false;
-            sneakingCam.SetActive(true);
-            
         }
 
         if (other.tag == ("Sprint"))
         {
             sprinting = true;
-            runningCam.SetActive(true);
         }
 
         if (other.tag == ("Ragdoll"))
@@ -220,7 +220,6 @@ public class PlayerController : MonoBehaviour
             sneaking = false;
             canJump = true;
             animator.SetBool("sneaking", false);
-            sneakingCam.SetActive(false);
             
         }
 
@@ -228,7 +227,6 @@ public class PlayerController : MonoBehaviour
         {
             sprinting = false;
             animator.SetBool("running", false);
-            runningCam.SetActive(false);
         }
 
         if (other.tag == ("Balance"))

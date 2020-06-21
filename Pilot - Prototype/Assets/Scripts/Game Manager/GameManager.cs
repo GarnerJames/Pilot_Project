@@ -9,4 +9,17 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Character");
     }
+
+    public void Play()
+    {
+        SceneManager.LoadScene("Exposition");
+    }
+
+    void Quit()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
 }
