@@ -50,16 +50,42 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                sneaking = true;
+            }
+            
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                sneaking = false;
+                canJump = true;
+                animator.SetBool("sneaking", false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                sprinting = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                sprinting = false;
+                animator.SetBool("running", false);
+            }
+
+            if (sprinting && (Input.GetKeyDown(KeyCode.DownArrow)))
+            {
+                animator.SetTrigger("Slide");
+            }
+
             if (sneaking == true)
             {
-                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
-                animator.SetBool("sneaking", true);
+                Sneak();
             }
 
             if (sprinting == true)
             {
-                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
-                animator.SetBool("running", true);
+                Sprint();
             }
 
             moveDirection.y = 0f;
@@ -167,17 +193,25 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
+    void Sneak()
+    {
+        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
+        animator.SetBool("sneaking", true);
+
+        canJump = false;
+    }
+
+    void Sprint()
+    {
+        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
+        animator.SetBool("running", true);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == ("Gravity"))
         {
             gravityScale = 0.2f;
-        }
-
-        if (other.tag == ("Sneak"))
-        {
-            sneaking = true;
-            canJump = false;
         }
 
         if (other.tag == ("Sprint"))
@@ -213,14 +247,6 @@ public class PlayerController : MonoBehaviour
         if(other.tag == ("Gravity"))
         {
             gravityScale = 0.9f;
-        }
-
-        if (other.tag == ("Sneak"))
-        {
-            sneaking = false;
-            canJump = true;
-            animator.SetBool("sneaking", false);
-            
         }
 
         if (other.tag == ("Sprint"))
