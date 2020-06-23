@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class DoorOpen : MonoBehaviour
 {
-    Animator animator;
+    public Animator animator;
+
+    public GameObject ragdollStand;
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
+       
     }
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.DownArrow))
+        if ((other.gameObject.tag == "Player") && Input.GetKeyDown(KeyCode.LeftControl))
         {
+            ragdollStand.SetActive(false);
+
             animator.SetTrigger("Open");
         }
     }

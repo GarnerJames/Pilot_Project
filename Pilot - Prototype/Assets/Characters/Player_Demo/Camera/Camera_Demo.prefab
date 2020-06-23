@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795800982947563848}
-  m_LocalRotation: {x: -0.049325276, y: 0.7053843, z: -0.049325276, w: -0.7053843}
-  m_LocalPosition: {x: 8, y: 33.2, z: -76.33}
+  m_LocalRotation: {x: -0.044949308, y: 0.7082254, z: -0.044560846, w: -0.7031434}
+  m_LocalPosition: {x: 12, y: 30.099998, z: 281.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 795800983923082347}
@@ -50,7 +50,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 0.10472272
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -233,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 795800983923082347}
   m_Layer: 0
-  m_Name: Cameras
+  m_Name: Camera_Demo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,4 +440,4 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0.4
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: 659.8737, y: 814.9081, z: 154.36111}
