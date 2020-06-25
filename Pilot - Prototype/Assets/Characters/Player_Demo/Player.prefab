@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 915989046867536230}
   - component: {fileID: 915989046867536231}
   - component: {fileID: 915989046867536235}
-  - component: {fileID: 915989046867536225}
   - component: {fileID: 7016099511319601981}
   m_Layer: 10
   m_Name: Player
@@ -165,6 +164,7 @@ MonoBehaviour:
   jumping: 0
   canJump: 1
   canAttack: 1
+  canSprint: 1
   attackPoint: {fileID: 915989046844538117}
 --- !u!95 &915989046867536235
 Animator:
@@ -185,20 +185,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &915989046867536225
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915989046867536232}
-  m_Material: {fileID: 13400000, guid: 1095933d5728be047add26addb9ae50e, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7016099511319601981
 MonoBehaviour:
   m_ObjectHideFlags: 0

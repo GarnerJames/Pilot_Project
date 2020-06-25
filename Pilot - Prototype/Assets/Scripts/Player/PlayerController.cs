@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool jumping = false;
     public bool canJump = true;
     public bool canAttack = true;
+    public bool canSprint = true;
 
     public Transform attackPoint;
 
@@ -53,16 +54,23 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 sneaking = true;
+                canSprint = false;
+                controller.height = 2f;
+                controller.center = new Vector3(0, -0.24f, 0);
             }
             
             if (Input.GetKeyUp(KeyCode.DownArrow))
             {
                 sneaking = false;
                 canJump = true;
+                canSprint = true;
                 animator.SetBool("sneaking", false);
+                controller.height = 3.4f;
+                controller.center = new Vector3(0, 0.6f, 0);
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
             {
                 sprinting = true;
             }
