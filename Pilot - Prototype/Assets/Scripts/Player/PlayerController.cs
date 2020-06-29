@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
+            //Sneaking 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 sneaking = true;
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
                 controller.center = new Vector3(0, 0.6f, 0);
             }
 
-
+            //Sprinting
             if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
             {
                 sprinting = true;
@@ -86,16 +87,19 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger("Slide");
             }
 
+            //Sneak
             if (sneaking == true)
             {
                 Sneak();
             }
 
+            //Sprint
             if (sprinting == true)
             {
                 Sprint();
             }
 
+            //Reset Y velocity
             moveDirection.y = 0f;
 
             animator.SetBool("Falling", false);
@@ -109,6 +113,7 @@ public class PlayerController : MonoBehaviour
             falling = false;
             jumping = false;
 
+            //Attack 
             if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
             {
                 Attack();
@@ -150,6 +155,7 @@ public class PlayerController : MonoBehaviour
             jumping = true;
         }
 
+        //Flip function
         if (!falling && !jumping)
         {
             if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
@@ -167,6 +173,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //Keeps player at 0 on the X axis
         if (transform.position.x != 0)
         {
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
@@ -192,6 +199,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //Attack point drawer
     private void OnDrawGizmosSelected()
     {
 
@@ -222,11 +230,6 @@ public class PlayerController : MonoBehaviour
             gravityScale = 0.2f;
         }
 
-        if (other.tag == ("Sprint"))
-        {
-            sprinting = true;
-        }
-
         if (other.tag == ("Ragdoll"))
         {
             animator.enabled = false;
@@ -238,16 +241,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Balance", true);
         }
 
-        if (other.tag == ("Wall"))
-        {
-            animator.SetBool("Wall", true);
-        }
-
-        if (other.tag == ("Slide") && sprinting == true)
-        {
-            animator.SetTrigger("Slide");
-        }
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -257,21 +250,11 @@ public class PlayerController : MonoBehaviour
             gravityScale = 0.9f;
         }
 
-        if (other.tag == ("Sprint"))
-        {
-            sprinting = false;
-            animator.SetBool("running", false);
-        }
-
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", false);
         }
 
-        if (other.tag == ("Wall"))
-        {
-            animator.SetBool("Wall", false);
-        }
     }
 
 }
