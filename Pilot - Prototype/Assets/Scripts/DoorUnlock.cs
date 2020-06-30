@@ -7,6 +7,10 @@ public class DoorUnlock : MonoBehaviour
 
     public static bool unlocked;
 
+    public GameObject doorLight;
+
+    public Material unlockedCol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +24,8 @@ public class DoorUnlock : MonoBehaviour
         {
             //Change Light Colour
             Debug.Log("Unlocked");
+
+            doorLight.GetComponent<MeshRenderer>().material = unlockedCol;
         }
     }
 

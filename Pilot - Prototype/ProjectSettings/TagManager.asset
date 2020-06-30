@@ -16,6 +16,10 @@ TagManager:
   - Enemy
   - Climb
   - Slide
+  - Die
+  - CheckpointOne
+  - CheckpointTwo
+  - CheckpointThree
   layers:
   - Default
   - TransparentFX

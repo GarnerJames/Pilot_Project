@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         controller.enabled = true;
         animator = GetComponent<Animator>();
         animator.enabled = true;
+
     }
 
     
@@ -223,6 +224,11 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("running", true);
     }
 
+    void Die()
+    {
+        animator.enabled = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == ("Gravity"))
@@ -239,6 +245,11 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", true);
+        }
+
+        if (other.tag == ("Die"))
+        {
+            Die();
         }
 
     }
