@@ -20,6 +20,7 @@ TagManager:
   - CheckpointOne
   - CheckpointTwo
   - CheckpointThree
+  - Security
   layers:
   - Default
   - TransparentFX

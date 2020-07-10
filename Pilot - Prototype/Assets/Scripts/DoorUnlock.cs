@@ -11,10 +11,13 @@ public class DoorUnlock : MonoBehaviour
 
     public Material unlockedCol;
 
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         unlocked = false;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -22,9 +25,6 @@ public class DoorUnlock : MonoBehaviour
     {
         if (unlocked)
         {
-            //Change Light Colour
-            Debug.Log("Unlocked");
-
             doorLight.GetComponent<MeshRenderer>().material = unlockedCol;
         }
     }
@@ -33,7 +33,7 @@ public class DoorUnlock : MonoBehaviour
     {
         if (other.tag == "Player" && unlocked)
         {
-            Destroy(gameObject);
+            animator.SetTrigger("Open");
         }
     }
 }

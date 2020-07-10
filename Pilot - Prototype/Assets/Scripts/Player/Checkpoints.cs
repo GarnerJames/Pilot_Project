@@ -12,12 +12,14 @@ public class Checkpoints : MonoBehaviour
     public GameObject checkpointThree;
 
     Animator animator;
+    CharacterController controller;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.transform.position = playerPos;
         animator = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -50,5 +52,6 @@ public class Checkpoints : MonoBehaviour
     {
         gameObject.transform.position = playerPos;
         animator.enabled = true;
+        controller.enabled = true;
     }
 }

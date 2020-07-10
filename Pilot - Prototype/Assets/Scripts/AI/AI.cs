@@ -36,5 +36,6 @@ public class AI : MonoBehaviour
 
             //mobani.SetBool("running", true);
         }
+
     }
 }

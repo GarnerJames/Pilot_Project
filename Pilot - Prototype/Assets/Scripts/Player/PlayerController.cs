@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveDirection;
 
-    public bool sneaking = false;
+    public static bool sneaking = false;
     public bool sprinting = false;
     public bool falling = false;
     public bool jumping = false;
@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         controller.enabled = true;
         animator = GetComponent<Animator>();
         animator.enabled = true;
-
     }
 
     
@@ -51,37 +50,6 @@ public class PlayerController : MonoBehaviour
         {
 
             moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
-
-            //Sneaking 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                sneaking = true;
-                canSprint = false;
-                controller.height = 2f;
-                controller.center = new Vector3(0, -0.24f, 0);
-            }
-            
-            if (Input.GetKeyUp(KeyCode.DownArrow))
-            {
-                sneaking = false;
-                canJump = true;
-                canSprint = true;
-                animator.SetBool("sneaking", false);
-                controller.height = 3.4f;
-                controller.center = new Vector3(0, 0.6f, 0);
-            }
-
-            //Sprinting
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
-            {
-                sprinting = true;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                sprinting = false;
-                animator.SetBool("running", false);
-            }
 
             if (sprinting && (Input.GetKeyDown(KeyCode.DownArrow)))
             {
@@ -120,6 +88,37 @@ public class PlayerController : MonoBehaviour
                 Attack();
             }
 
+        }
+
+        //Sprinting
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
+        {
+            sprinting = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            sprinting = false;
+            animator.SetBool("running", false);
+        }
+
+        //Sneaking 
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            sneaking = true;
+            canSprint = false;
+            controller.height = 2f;
+            controller.center = new Vector3(0, -0.24f, 0);
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            sneaking = false;
+            canJump = true;
+            canSprint = true;
+            animator.SetBool("sneaking", false);
+            controller.height = 3.4f;
+            controller.center = new Vector3(0, 0.6f, 0);
         }
 
 
@@ -222,11 +221,13 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
         animator.SetBool("running", true);
+        sneaking = false;
     }
 
-    void Die()
+    public void Die()
     {
         animator.enabled = false;
+        controller.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -245,6 +246,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", true);
+            canJump = false;
         }
 
         if (other.tag == ("Die"))
@@ -264,6 +266,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Balance"))
         {
             animator.SetBool("Balance", false);
+            canJump = true;
         }
 
     }
