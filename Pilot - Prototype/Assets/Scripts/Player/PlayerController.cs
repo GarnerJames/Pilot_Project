@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public bool canJump = true;
     public bool canAttack = true;
     public bool canSprint = true;
+    public bool canMove = true;
 
     public Transform attackPoint;
 
@@ -50,103 +51,106 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (controller.isGrounded)
+        if (canMove)
         {
-
-            moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
-
-            if (sprinting && (Input.GetKeyDown(KeyCode.DownArrow)))
+            if (controller.isGrounded)
             {
-                animator.SetTrigger("Slide");
-            }
 
-            //Sneak
-            if (sneaking == true)
-            {
-                Sneak();
-            }
+                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
-            //Sprint
-            if (sprinting == true)
-            {
-                Sprint();
-            }
-
-            //Reset Y velocity
-            moveDirection.y = 0f;
-
-            animator.SetBool("Falling", false);
-
-            animator.SetTrigger("Land");
-
-            animator.SetBool("Jumping", false);
-
-            jumpNumber = doubleJump;
-
-            falling = false;
-            jumping = false;
-
-            //Attack 
-            if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
-            {
-                Attack();
-          
-            }
-
-        }
-
-        //Sprinting
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
-        {
-            sprinting = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            sprinting = false;
-            animator.SetBool("running", false);
-        }
-
-        //Sneaking 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            sneaking = true;
-            canSprint = false;
-            controller.height = 2f;
-            controller.center = new Vector3(0, -0.24f, 0);
-        }
-
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            sneaking = false;
-            canJump = true;
-            canSprint = true;
-            animator.SetBool("sneaking", false);
-            controller.height = 3.4f;
-            controller.center = new Vector3(0, 0.6f, 0);
-        }
-
-
-        if (jumpNumber > 0)
-        {
-            if (canJump && !falling)
-            {
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+                if (sprinting && (Input.GetKeyDown(KeyCode.DownArrow)))
                 {
-                    moveDirection.y = jumpHeight;
-                    animator.SetBool("Jumping", true);
-                    animator.SetBool("Falling", false);
-                    jumpNumber = jumpNumber - 1;
-                    falling = false;
+                    animator.SetTrigger("Slide");
+                }
+
+                //Sneak
+                if (sneaking == true)
+                {
+                    Sneak();
+                }
+
+                //Sprint
+                if (sprinting == true)
+                {
+                    Sprint();
+                }
+
+                //Reset Y velocity
+                moveDirection.y = 0f;
+
+                animator.SetBool("Falling", false);
+
+                animator.SetTrigger("Land");
+
+                animator.SetBool("Jumping", false);
+
+                jumpNumber = doubleJump;
+
+                falling = false;
+                jumping = false;
+
+                //Attack 
+                if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
+                {
+                    Attack();
+
+                }
+
+            }
+
+            //Sprinting
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
+            {
+                sprinting = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                sprinting = false;
+                animator.SetBool("running", false);
+            }
+
+            //Sneaking 
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                sneaking = true;
+                canSprint = false;
+                controller.height = 2f;
+                controller.center = new Vector3(0, -0.24f, 0);
+            }
+
+            if (Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                sneaking = false;
+                canJump = true;
+                canSprint = true;
+                animator.SetBool("sneaking", false);
+                controller.height = 3.4f;
+                controller.center = new Vector3(0, 0.6f, 0);
+            }
+
+
+            if (jumpNumber > 0)
+            {
+                if (canJump && !falling)
+                {
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        moveDirection.y = jumpHeight;
+                        animator.SetBool("Jumping", true);
+                        animator.SetBool("Falling", false);
+                        jumpNumber = jumpNumber - 1;
+                        falling = false;
+                    }
                 }
             }
+
+
+            moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+            controller.Move(moveDirection * Time.deltaTime);
+
+            animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
         }
-       
-
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
-        controller.Move(moveDirection * Time.deltaTime);
-
-        animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
 
 
         if (controller.velocity.y < fallingSpeed)
@@ -195,8 +199,33 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("Attack");
 
+        canAttack = false;
+
+        canMove = false;
+
+        Invoke("MoveAttackDelay", 0.86f);
+
+        Invoke("AttackDelay", attackDelay);
+
         Instantiate(attackFX, gunTip.transform.position, gunTip.transform.rotation);
 
+        Collider[] hitEnemy = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+
+        foreach(Collider enemy in hitEnemy)
+        {
+            enemy.GetComponent<EnemyDamage>().TakeDamage();
+        }
+
+    }
+
+    void AttackDelay()
+    {
+        canAttack = true;
+    }
+
+    void MoveAttackDelay()
+    {
+        canMove = true;
     }
 
     //Attack point drawer

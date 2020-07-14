@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &915989046844538117
 Transform:
   m_ObjectHideFlags: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915989046844538122}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 1.118}
+  m_LocalPosition: {x: 0, y: 1.2, z: 4.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 915989046867536228}
@@ -154,7 +154,8 @@ MonoBehaviour:
   jumpNumber: 1
   gravityScale: 1
   fallingSpeed: -3
-  attackRange: 1.2
+  attackRange: 5
+  attackDelay: 0
   attackFX: {fileID: 6774453225576479265, guid: d7f74a462b6ecf242a13c6f40ce909ea,
     type: 3}
   gunTip: {fileID: 1266227626012878773}
@@ -168,6 +169,7 @@ MonoBehaviour:
   canJump: 1
   canAttack: 1
   canSprint: 1
+  canMove: 1
   attackPoint: {fileID: 915989046844538117}
 --- !u!95 &915989046867536235
 Animator:
@@ -230,7 +232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266227626012878773}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 1.593, z: 1.652}
+  m_LocalPosition: {x: 0, y: 1.424, z: 1.495}
   m_LocalScale: {x: 0.18403, y: 0.18403, z: 0.18403}
   m_Children: []
   m_Father: {fileID: 915989046867536228}
@@ -322,13 +324,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3370631988386906456}
-  m_LocalRotation: {x: 0.42614597, y: 0.5718068, z: -0.526647, w: 0.46268737}
-  m_LocalPosition: {x: 0.097, y: 0.51, z: 0.026}
+  m_LocalRotation: {x: 0.42066634, y: 0.57797074, z: -0.5198749, w: 0.46767497}
+  m_LocalPosition: {x: 0.029, y: 0.504, z: 0.04}
   m_LocalScale: {x: 0.06976264, y: 0.4532351, z: 0.6431534}
   m_Children: []
   m_Father: {fileID: 6133096140175695771}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 85.29201, y: 102.04301, z: 0}
+  m_LocalEulerAnglesHint: {x: 83.942, y: 102.04301, z: 0}
 --- !u!33 &5033265664406293910
 MeshFilter:
   m_ObjectHideFlags: 0

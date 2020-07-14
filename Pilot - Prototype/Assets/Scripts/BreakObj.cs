@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BreakObj : MonoBehaviour
 {
-    public GameObject brokenVersion;
+    //public GameObject brokenVersion;
 
     public void TakeDamage()
     {
@@ -13,7 +13,7 @@ public class BreakObj : MonoBehaviour
 
     void Break()
     {
-        Instantiate(brokenVersion, transform.position, transform.rotation);
+        //Instantiate(brokenVersion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
