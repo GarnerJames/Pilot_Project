@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     public float gravityScale;
     public float fallingSpeed;
     public float attackRange = 0.5f;
+    public float attackDelay;
+
+    public GameObject attackFX;
+    public GameObject gunTip;
 
     public LayerMask enemyLayer;
 
@@ -86,6 +90,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
             {
                 Attack();
+          
             }
 
         }
@@ -190,12 +195,7 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("Attack");
 
-        Collider [] hitEnemys = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
-
-        foreach (Collider Enemy in hitEnemys)
-        {
-            Enemy.GetComponent<EnemyDamage>().TakeDamage();
-        }
+        Instantiate(attackFX, gunTip.transform.position, gunTip.transform.rotation);
 
     }
 
