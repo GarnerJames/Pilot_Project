@@ -23,7 +23,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.63
     min: 0
     max: 1
   scatter:
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   intensity:
     m_OverrideState: 1
     m_Value: 0.3
@@ -159,7 +159,7 @@ MonoBehaviour:
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 6
+    m_Value: 15.8
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.2
     min: -1
     max: 1
   xMultiplier:
