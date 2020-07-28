@@ -170,6 +170,7 @@ MonoBehaviour:
   canAttack: 1
   canSprint: 1
   canMove: 1
+  gun: {fileID: 0}
   attackPoint: {fileID: 915989046844538117}
 --- !u!95 &915989046867536235
 Animator:
@@ -232,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266227626012878773}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 1.424, z: 1.495}
+  m_LocalPosition: {x: 0, y: 1.47, z: 1.29}
   m_LocalScale: {x: 0.18403, y: 0.18403, z: 0.18403}
   m_Children: []
   m_Father: {fileID: 915989046867536228}

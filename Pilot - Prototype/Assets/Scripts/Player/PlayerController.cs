@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
     public bool canSprint = true;
     public bool canMove = true;
 
+    public GameObject gun;
+    public GameObject sneakingCam;
+    public GameObject sprintingCam;
+
     public Transform attackPoint;
 
 
@@ -108,6 +112,7 @@ public class PlayerController : MonoBehaviour
             {
                 sprinting = false;
                 animator.SetBool("running", false);
+                sprintingCam.SetActive(false);
             }
 
             //Sneaking 
@@ -116,7 +121,8 @@ public class PlayerController : MonoBehaviour
                 sneaking = true;
                 canSprint = false;
                 controller.height = 2f;
-                controller.center = new Vector3(0, -0.24f, 0);
+                controller.center = new Vector3(0, -0.14f, 0);
+                
             }
 
             if (Input.GetKeyUp(KeyCode.DownArrow))
@@ -125,8 +131,10 @@ public class PlayerController : MonoBehaviour
                 canJump = true;
                 canSprint = true;
                 animator.SetBool("sneaking", false);
-                controller.height = 3.4f;
-                controller.center = new Vector3(0, 0.6f, 0);
+                sneakingCam.SetActive(false);
+                Invoke("JumpColDelay", 0.8f);
+                //controller.height = 3.4f;
+                //controller.center = new Vector3(0, 0.6f, 0);
             }
 
 
@@ -141,6 +149,9 @@ public class PlayerController : MonoBehaviour
                         animator.SetBool("Falling", false);
                         jumpNumber = jumpNumber - 1;
                         falling = false;
+                        controller.height = 2f;
+                        controller.center = new Vector3(0, 0.8f, 0);
+                        Invoke("JumpColDelay", 0.5f);
                     }
                 }
             }
@@ -172,6 +183,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     transform.localScale = new Vector3(1, 1, -1);
+                    
                 }
 
                 if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -228,6 +240,12 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
+    void JumpColDelay()
+    {
+        controller.height = 3.4f;
+        controller.center = new Vector3(0, 0.6f, 0);
+    }
+
     //Attack point drawer
     private void OnDrawGizmosSelected()
     {
@@ -243,6 +261,8 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
         animator.SetBool("sneaking", true);
 
+        sneakingCam.SetActive(true);
+
         canJump = false;
     }
 
@@ -251,6 +271,8 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
         animator.SetBool("running", true);
         sneaking = false;
+
+        sprintingCam.SetActive(true);
     }
 
     public void Die()
@@ -281,6 +303,12 @@ public class PlayerController : MonoBehaviour
         if (other.tag == ("Die"))
         {
             Die();
+        }
+
+        if (other.tag == "GunTrigger")
+        {
+            gun.SetActive(true);
+            canAttack = true;
         }
 
     }

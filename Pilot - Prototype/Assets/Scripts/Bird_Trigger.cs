@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp : MonoBehaviour
+public class Bird_Trigger : MonoBehaviour
 {
-    public GameObject pickUpFX;
+    public Animator ani;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Instantiate(pickUpFX, transform.position, transform.rotation);
-
-            Destroy(gameObject);
+            ani.SetTrigger("Fly");
         }
     }
 }

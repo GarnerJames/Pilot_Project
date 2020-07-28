@@ -21,6 +21,8 @@ TagManager:
   - CheckpointTwo
   - CheckpointThree
   - Security
+  - Gun
+  - GunTrigger
   layers:
   - Default
   - TransparentFX
