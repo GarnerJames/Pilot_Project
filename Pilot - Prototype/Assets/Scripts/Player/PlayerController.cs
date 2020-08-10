@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
 
     public GameObject gun;
-    public GameObject sneakingCam;
-    public GameObject sprintingCam;
 
     public Transform attackPoint;
 
@@ -112,7 +110,7 @@ public class PlayerController : MonoBehaviour
             {
                 sprinting = false;
                 animator.SetBool("running", false);
-                sprintingCam.SetActive(false);
+                
             }
 
             //Sneaking 
@@ -131,7 +129,6 @@ public class PlayerController : MonoBehaviour
                 canJump = true;
                 canSprint = true;
                 animator.SetBool("sneaking", false);
-                sneakingCam.SetActive(false);
                 Invoke("JumpColDelay", 0.8f);
                 //controller.height = 3.4f;
                 //controller.center = new Vector3(0, 0.6f, 0);
@@ -176,22 +173,25 @@ public class PlayerController : MonoBehaviour
         }
 
         //Flip function
-        if (!falling && !jumping)
+        if (canMove)
         {
-            if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
+            if (!falling && !jumping)
             {
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
                 {
-                    transform.localScale = new Vector3(1, 1, -1);
-                    
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        transform.localScale = new Vector3(1, 1, -1);
+
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        transform.localScale = new Vector3(1, 1, 1);
+                    }
                 }
 
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
             }
-
         }
 
         //Keeps player at 0 on the X axis
@@ -260,9 +260,6 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
         animator.SetBool("sneaking", true);
-
-        sneakingCam.SetActive(true);
-
         canJump = false;
     }
 
@@ -271,8 +268,6 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
         animator.SetBool("running", true);
         sneaking = false;
-
-        sprintingCam.SetActive(true);
     }
 
     public void Die()
@@ -326,6 +321,22 @@ public class PlayerController : MonoBehaviour
             canJump = true;
         }
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Push_Truck" && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            animator.SetTrigger("Push_Truck");
+            canMove = false;
+            animator.SetFloat("Speed", 0);
+            Invoke("CanMove", 4.5f);
+        }
+    }
+
+    void CanMove()
+    {
+        canMove = true;
     }
 
 }

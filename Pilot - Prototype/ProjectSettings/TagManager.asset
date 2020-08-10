@@ -23,6 +23,7 @@ TagManager:
   - Security
   - Gun
   - GunTrigger
+  - Push_Truck
   layers:
   - Default
   - TransparentFX

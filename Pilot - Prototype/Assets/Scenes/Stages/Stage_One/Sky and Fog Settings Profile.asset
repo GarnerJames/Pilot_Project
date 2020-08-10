@@ -23,7 +23,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.63
+    m_Value: 0.2
     min: 0
     max: 1
   scatter:
@@ -150,7 +150,7 @@ MonoBehaviour:
     m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 250
+    m_Value: 800
   albedo:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -159,7 +159,7 @@ MonoBehaviour:
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 15.8
+    m_Value: 28
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
@@ -234,7 +234,7 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: -6
+    m_Value: -7
   compensation:
     m_OverrideState: 1
     m_Value: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
     m_Value: -7
   limitMax:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -2
   curveMap:
     m_OverrideState: 1
     m_Value:
