@@ -6,12 +6,17 @@ public class Truck_Push_Trigger : MonoBehaviour
 {
 
     public Animator truck;
+    public GameObject break_wall;
+    public GameObject player;
+    public Vector3 playerLocation;
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.LeftControl))
+        if (other.tag == "Player" && Input.GetButtonDown("Fire3"))
         {
-            //truck.SetTrigger("Pushed");
+            truck.SetTrigger("Push");
+            break_wall.SetActive(false);
+            player.transform.position = playerLocation;
             gameObject.SetActive(false);
         }
     }

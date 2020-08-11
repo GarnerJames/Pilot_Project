@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
-                if (sprinting && (Input.GetKeyDown(KeyCode.DownArrow)))
+                if (sprinting && (Input.GetButtonDown("Fire1")))
                 {
                     animator.SetTrigger("Slide");
                 }
@@ -98,15 +98,20 @@ public class PlayerController : MonoBehaviour
 
                 }
 
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    Caught();
+                }
+
             }
 
             //Sprinting
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
+            if (Input.GetButtonDown("Fire2") && canSprint)
             {
                 sprinting = true;
             }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetButtonUp("Fire2"))
             {
                 sprinting = false;
                 animator.SetBool("running", false);
@@ -114,7 +119,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Sneaking 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetButtonDown("Fire1"))
             {
                 sneaking = true;
                 canSprint = false;
@@ -123,7 +128,7 @@ public class PlayerController : MonoBehaviour
                 
             }
 
-            if (Input.GetKeyUp(KeyCode.DownArrow))
+            if (Input.GetButtonUp("Fire1"))
             {
                 sneaking = false;
                 canJump = true;
@@ -139,7 +144,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (canJump && !falling)
                 {
-                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    if (Input.GetButtonDown("Jump"))
                     {
                         moveDirection.y = jumpHeight;
                         animator.SetBool("Jumping", true);
@@ -246,6 +251,13 @@ public class PlayerController : MonoBehaviour
         controller.center = new Vector3(0, 0.6f, 0);
     }
 
+    void Caught()
+    {
+        animator.SetTrigger("Caught");
+        canMove = false;
+        //restart
+    }
+
     //Attack point drawer
     private void OnDrawGizmosSelected()
     {
@@ -289,12 +301,6 @@ public class PlayerController : MonoBehaviour
             controller.enabled = false;
         }
 
-        if (other.tag == ("Balance"))
-        {
-            animator.SetBool("Balance", true);
-            canJump = false;
-        }
-
         if (other.tag == ("Die"))
         {
             Die();
@@ -306,6 +312,8 @@ public class PlayerController : MonoBehaviour
             canAttack = true;
         }
 
+       
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -315,17 +323,13 @@ public class PlayerController : MonoBehaviour
             gravityScale = 0.9f;
         }
 
-        if (other.tag == ("Balance"))
-        {
-            animator.SetBool("Balance", false);
-            canJump = true;
-        }
+        
 
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Push_Truck" && Input.GetKeyDown(KeyCode.LeftControl))
+        if(other.tag == "Push_Truck" && Input.GetButtonDown("Fire3"))
         {
             animator.SetTrigger("Push_Truck");
             canMove = false;

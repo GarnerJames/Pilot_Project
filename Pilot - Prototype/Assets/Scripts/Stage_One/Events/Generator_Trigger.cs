@@ -9,7 +9,7 @@ public class Generator_Trigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.LeftControl))
+        if (other.tag == "Player" && Input.GetButtonDown("Fire3"))
         {
             lightOne.SetActive(false);
         }
