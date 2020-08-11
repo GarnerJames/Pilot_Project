@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public bool canAttack = true;
     public bool canSprint = true;
     public bool canMove = true;
+    public bool canSlide = true;
 
     public GameObject gun;
 
@@ -60,9 +61,15 @@ public class PlayerController : MonoBehaviour
 
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
-                if (sprinting && (Input.GetButtonDown("Fire1")))
+
+                if (canSlide)
                 {
-                    animator.SetTrigger("Slide");
+                    if (sprinting && (Input.GetButtonDown("Fire1")))
+                    {
+                        animator.SetTrigger("Slide");
+                        canSlide = false;
+                        Invoke("SlideDelay", 2f);
+                    }
                 }
 
                 //Sneak
@@ -180,22 +187,21 @@ public class PlayerController : MonoBehaviour
         //Flip function
         if (canMove)
         {
-            if (!falling && !jumping)
+            if (!jumping)
             {
                 if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
                 {
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    if (Input.GetAxis("Horizontal") < 0)
                     {
                         transform.localScale = new Vector3(1, 1, -1);
 
                     }
 
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    if (Input.GetAxis("Horizontal") > 0)
                     {
                         transform.localScale = new Vector3(1, 1, 1);
                     }
                 }
-
             }
         }
 
@@ -243,6 +249,11 @@ public class PlayerController : MonoBehaviour
     void MoveAttackDelay()
     {
         canMove = true;
+    }
+
+    void SlideDelay()
+    {
+        canSlide = true;
     }
 
     void JumpColDelay()
