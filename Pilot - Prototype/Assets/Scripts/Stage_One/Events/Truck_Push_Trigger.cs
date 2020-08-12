@@ -9,6 +9,7 @@ public class Truck_Push_Trigger : MonoBehaviour
     public GameObject break_wall;
     public GameObject player;
     public Vector3 playerLocation;
+    public Vector3 playerRotation;
 
     private void OnTriggerStay(Collider other)
     {
@@ -17,6 +18,7 @@ public class Truck_Push_Trigger : MonoBehaviour
             truck.SetTrigger("Push");
             break_wall.SetActive(false);
             player.transform.position = playerLocation;
+            player.transform.localScale = playerRotation;
             gameObject.SetActive(false);
         }
     }

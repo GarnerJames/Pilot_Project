@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
                     {
                         animator.SetTrigger("Slide");
                         canSlide = false;
-                        Invoke("SlideDelay", 2f);
+                        Invoke("SlideDelay", 1f);
                     }
                 }
 
@@ -262,10 +262,11 @@ public class PlayerController : MonoBehaviour
         controller.center = new Vector3(0, 0.6f, 0);
     }
 
-    void Caught()
+    public void Caught()
     {
         animator.SetTrigger("Caught");
         canMove = false;
+        Invoke("CanMove", 5f);
         //restart
     }
 
@@ -304,6 +305,11 @@ public class PlayerController : MonoBehaviour
         if(other.tag == ("Gravity"))
         {
             gravityScale = 0.2f;
+        }
+
+        if (other.tag == ("Caught"))
+        {
+            Caught();
         }
 
         if (other.tag == ("Ragdoll"))

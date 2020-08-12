@@ -26,6 +26,7 @@ TagManager:
   - Push_Truck
   - truck
   - Truck
+  - Caught
   layers:
   - Default
   - TransparentFX
