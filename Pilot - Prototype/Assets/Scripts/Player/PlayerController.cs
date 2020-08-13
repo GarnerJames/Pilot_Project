@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float attackRange = 0.5f;
     public float attackDelay;
 
+    public float currentZpos;
+
     public GameObject attackFX;
     public GameObject gunTip;
 
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public bool canSprint = true;
     public bool canMove = true;
     public bool canSlide = true;
+    public bool sliding = false;
 
     public GameObject gun;
 
@@ -48,11 +51,15 @@ public class PlayerController : MonoBehaviour
         controller.enabled = true;
         animator = GetComponent<Animator>();
         animator.enabled = true;
+
+        
     }
 
     
     void Update()
     {
+
+        currentZpos = transform.position.z;
 
         if (canMove)
         {
@@ -69,6 +76,10 @@ public class PlayerController : MonoBehaviour
                         animator.SetTrigger("Slide");
                         canSlide = false;
                         Invoke("SlideDelay", 1f);
+                        controller.height = 1f;
+                        controller.center = new Vector3(0, -0.57f, 0);
+                        Invoke("JumpColDelay", 0.8f);
+                        sliding = true;
                     }
                 }
 
@@ -126,12 +137,12 @@ public class PlayerController : MonoBehaviour
             }
 
             //Sneaking 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && !sliding)
             {
                 sneaking = true;
                 canSprint = false;
                 controller.height = 2f;
-                controller.center = new Vector3(0, -0.14f, 0);
+                controller.center = new Vector3(0, -0.06f, 0);
                 
             }
 
@@ -189,18 +200,19 @@ public class PlayerController : MonoBehaviour
         {
             if (!jumping)
             {
-                if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
+                //if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
+                //{
+
+                // }
+
+                if (transform.position.z < currentZpos)
                 {
-                    if (Input.GetAxis("Horizontal") < 0)
-                    {
-                        transform.localScale = new Vector3(1, 1, -1);
+                    transform.localScale = new Vector3(1, 1, -1);
+                }
 
-                    }
-
-                    if (Input.GetAxis("Horizontal") > 0)
-                    {
-                        transform.localScale = new Vector3(1, 1, 1);
-                    }
+                if (gameObject.transform.position.z > currentZpos)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
                 }
             }
         }
@@ -254,6 +266,7 @@ public class PlayerController : MonoBehaviour
     void SlideDelay()
     {
         canSlide = true;
+        sliding = false;
     }
 
     void JumpColDelay()
@@ -329,7 +342,12 @@ public class PlayerController : MonoBehaviour
             canAttack = true;
         }
 
-       
+        if (other.tag == ("Wall"))
+        {
+            canJump = false;
+        }
+
+
 
     }
 
@@ -340,19 +358,11 @@ public class PlayerController : MonoBehaviour
             gravityScale = 0.9f;
         }
 
-        
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.tag == "Push_Truck" && Input.GetButtonDown("Fire3"))
+        if (other.tag == ("Wall"))
         {
-            animator.SetTrigger("Push_Truck");
-            canMove = false;
-            animator.SetFloat("Speed", 0);
-            Invoke("CanMove", 4.5f);
+            canJump = true;
         }
+
     }
 
     void CanMove()
