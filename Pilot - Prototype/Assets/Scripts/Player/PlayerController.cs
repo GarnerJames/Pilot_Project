@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public float runSpeed;
+    public float climbSpeed;
     public float sprintSpeed;
     public float sneakSpeed;
     public float jumpHeight;
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     public bool canMove = true;
     public bool canSlide = true;
     public bool sliding = false;
+    public bool autoSneaking = false;
+    public bool climbing = false;
 
     public GameObject gun;
 
@@ -51,8 +54,6 @@ public class PlayerController : MonoBehaviour
         controller.enabled = true;
         animator = GetComponent<Animator>();
         animator.enabled = true;
-
-        
     }
 
     
@@ -61,6 +62,15 @@ public class PlayerController : MonoBehaviour
 
         currentZpos = transform.position.z;
 
+        if (climbing == true)
+        {
+            Climb();
+        }
+        else
+        {
+            gravityScale = 0.9f;
+        }
+
         if (canMove)
         {
             if (controller.isGrounded)
@@ -68,20 +78,24 @@ public class PlayerController : MonoBehaviour
 
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
 
-
                 if (canSlide)
                 {
-                    if (sprinting && (Input.GetButtonDown("Fire1")))
+                    if (sprinting)
                     {
-                        animator.SetTrigger("Slide");
-                        canSlide = false;
-                        Invoke("SlideDelay", 1f);
-                        controller.height = 1f;
-                        controller.center = new Vector3(0, -0.57f, 0);
-                        Invoke("JumpColDelay", 0.8f);
-                        sliding = true;
+                        if (Input.GetButtonDown("Fire1"))
+                        {
+                            animator.SetTrigger("Slide");
+                            sliding = true;
+                            canJump = false;
+                            controller.height = 1f;
+                            controller.center = new Vector3(0, -0.57f, 0);
+                            canSlide = false;
+                            Invoke("SlideDelay", 1f);
+                        }
                     }
                 }
+
+                
 
                 //Sneak
                 if (sneaking == true)
@@ -123,6 +137,8 @@ public class PlayerController : MonoBehaviour
 
             }
 
+            
+
             //Sprinting
             if (Input.GetButtonDown("Fire2") && canSprint)
             {
@@ -137,24 +153,25 @@ public class PlayerController : MonoBehaviour
             }
 
             //Sneaking 
-            if (Input.GetButtonDown("Fire1") && !sliding)
+            if (autoSneaking == false)
             {
-                sneaking = true;
-                canSprint = false;
-                controller.height = 2f;
-                controller.center = new Vector3(0, -0.06f, 0);
-                
-            }
+                if (Input.GetButtonDown("Fire1") && !sliding)
+                {
+                    sneaking = true;
+                    canSprint = false;
+                    controller.height = 2f;
+                    controller.center = new Vector3(0, -0.06f, 0);
+                }
 
-            if (Input.GetButtonUp("Fire1"))
-            {
-                sneaking = false;
-                canJump = true;
-                canSprint = true;
-                animator.SetBool("sneaking", false);
-                Invoke("JumpColDelay", 0.8f);
-                //controller.height = 3.4f;
-                //controller.center = new Vector3(0, 0.6f, 0);
+                if (Input.GetButtonUp("Fire1") && !sliding)
+                {
+                    sneaking = false;
+                    canJump = true;
+                    canSprint = true;
+                    animator.SetBool("sneaking", false);
+                    controller.height = 3.4f;
+                    controller.center = new Vector3(0, 0.6f, 0);
+                }
             }
 
 
@@ -253,6 +270,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void Climb()
+    {
+        gravityScale = 0f;
+        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbSpeed, moveDirection.y);
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        canJump = true;
+        transform.localScale = new Vector3(1, 1, 1);
+        animator.SetBool("Climbing", true);
+
+        if (Input.GetButton("Jump"))
+        {
+            climbing = false;
+            animator.SetBool("Climbing", false);
+        }
+    }
+
     void AttackDelay()
     {
         canAttack = true;
@@ -265,8 +298,11 @@ public class PlayerController : MonoBehaviour
 
     void SlideDelay()
     {
-        canSlide = true;
+        controller.height = 3.4f;
+        controller.center = new Vector3(0, 0.6f, 0);
         sliding = false;
+        canSlide = true;
+        canJump = true;
     }
 
     void JumpColDelay()
@@ -305,6 +341,16 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
         animator.SetBool("running", true);
         sneaking = false;
+    }
+
+    void AutoSneak()
+    {
+
+        autoSneaking = true;
+        sneaking = true;
+        canSprint = false;
+        controller.height = 2f;
+        controller.center = new Vector3(0, -0.06f, 0);
     }
 
     public void Die()
@@ -347,7 +393,10 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
 
-
+        if (other.tag == "AutoSneak")
+        {
+            AutoSneak();
+        }
 
     }
 
@@ -363,6 +412,34 @@ public class PlayerController : MonoBehaviour
             canJump = true;
         }
 
+        if (other.tag == "AutoSneak")
+        {
+            autoSneaking = false;
+            sneaking = false;
+            canJump = true;
+            canSprint = true;
+            animator.SetBool("sneaking", false);
+            controller.height = 3.4f;
+            controller.center = new Vector3(0, 0.6f, 0);
+        }
+
+        if (other.tag == "Climb")
+        {
+            climbing = false;
+            animator.SetBool("Climbing", false);
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Climb")
+        {
+            if (Input.GetButtonDown("Fire3"))
+            {
+                climbing = true;
+            }
+        }
     }
 
     void CanMove()
