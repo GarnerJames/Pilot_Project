@@ -6,15 +6,19 @@ public class Light_Trigger : MonoBehaviour
 {
     public GameObject spotLight;
 
+    public bool On;
+
     private void Update()
     {
         if (spotLight.active)
         {
-            Invoke("LightsOff", 4f);
+            On= true;
+            Invoke("LightsOff", 1.5f);
         }
 
         if (spotLight.active == false)
         {
+            On = false;
             Invoke("LightsOn", 2f);
         }
     }

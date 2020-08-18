@@ -73,10 +73,35 @@ public class PlayerController : MonoBehaviour
 
         if (canMove)
         {
+            if (!climbing)
+            {
+                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
+            }
+
+            //Sprinting
+            if (Input.GetButtonDown("Fire2") && canSprint)
+            {
+                sprinting = true;
+            }
+
+            if (Input.GetButtonUp("Fire2"))
+            {
+                sprinting = false;
+                animator.SetBool("running", false);
+
+            }
+
+            //Sprint
+            if (sprinting == true)
+            {
+                Sprint();
+            }
+
+
             if (controller.isGrounded)
             {
 
-                moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
+                
 
                 if (canSlide)
                 {
@@ -101,12 +126,6 @@ public class PlayerController : MonoBehaviour
                 if (sneaking == true)
                 {
                     Sneak();
-                }
-
-                //Sprint
-                if (sprinting == true)
-                {
-                    Sprint();
                 }
 
                 //Reset Y velocity
@@ -135,21 +154,6 @@ public class PlayerController : MonoBehaviour
                     Caught();
                 }
 
-            }
-
-            
-
-            //Sprinting
-            if (Input.GetButtonDown("Fire2") && canSprint)
-            {
-                sprinting = true;
-            }
-
-            if (Input.GetButtonUp("Fire2"))
-            {
-                sprinting = false;
-                animator.SetBool("running", false);
-                
             }
 
             //Sneaking 
@@ -215,22 +219,14 @@ public class PlayerController : MonoBehaviour
         //Flip function
         if (canMove)
         {
-            if (!jumping)
+            if (transform.position.z < currentZpos)
             {
-                //if (Input.GetAxis("Horizontal") != -1 && Input.GetAxis("Horizontal") != 1)
-                //{
+                transform.localScale = new Vector3(1, 1, -1);
+            }
 
-                // }
-
-                if (transform.position.z < currentZpos)
-                {
-                    transform.localScale = new Vector3(1, 1, -1);
-                }
-
-                if (gameObject.transform.position.z > currentZpos)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
+            if (gameObject.transform.position.z > currentZpos)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
             }
         }
 
@@ -273,8 +269,8 @@ public class PlayerController : MonoBehaviour
     void Climb()
     {
         gravityScale = 0f;
-        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbSpeed, moveDirection.y);
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbSpeed, 0);
+        
         canJump = true;
         transform.localScale = new Vector3(1, 1, 1);
         animator.SetBool("Climbing", true);
