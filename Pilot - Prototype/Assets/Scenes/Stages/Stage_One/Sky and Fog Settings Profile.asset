@@ -23,7 +23,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.2
     min: 0
     max: 1
   scatter:
@@ -53,6 +53,44 @@ MonoBehaviour:
   m_HighQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-8687618168313187783
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8bcdf71d7fafa419fca1ed162f5fc9, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  postExposure:
+    m_OverrideState: 1
+    m_Value: 0
+  contrast:
+    m_OverrideState: 1
+    m_Value: -20
+    min: -100
+    max: 100
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 1
+    showAlpha: 0
+    showEyeDropper: 1
+  hueShift:
+    m_OverrideState: 1
+    m_Value: 0
+    min: -180
+    max: 180
+  saturation:
+    m_OverrideState: 1
+    m_Value: 10
+    min: -100
+    max: 100
 --- !u!114 &-8300754696883420763
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -72,7 +110,7 @@ MonoBehaviour:
     m_Value: 2
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.15
     min: 0
     max: 1
   response:
@@ -111,12 +149,12 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.678
+    m_Value: 0.66
     min: 0
     max: 1
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.04
+    m_Value: 0.02
     min: 0.01
     max: 1
   roundness:
@@ -160,20 +198,20 @@ MonoBehaviour:
     m_Value: 10
     min: 0.1
   nearFocusStart:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 2
     min: 0
   nearFocusEnd:
-    m_OverrideState: 1
-    m_Value: 5
+    m_OverrideState: 0
+    m_Value: 10.27
     min: 0
   farFocusStart:
     m_OverrideState: 1
-    m_Value: 20
+    m_Value: 30
     min: 0
   farFocusEnd:
     m_OverrideState: 1
-    m_Value: 40
+    m_Value: 50
     min: 0
   m_NearSampleCount:
     m_OverrideState: 1
@@ -221,6 +259,7 @@ MonoBehaviour:
   - {fileID: -6174631738212465671}
   - {fileID: -8300754696883420763}
   - {fileID: -5994503866044965347}
+  - {fileID: -8687618168313187783}
 --- !u!114 &1654620254110247606
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -266,26 +305,26 @@ MonoBehaviour:
     min: 0
   baseHeight:
     m_OverrideState: 1
-    m_Value: -30
+    m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 800
+    m_Value: 1000
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.4292453, g: 0.9291913, b: 1, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 38
+    m_Value: 23.1
     min: 1
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
   anisotropy:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.3
     min: -1
     max: 1
   globalLightProbeDimmer:

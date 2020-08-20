@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light_Trigger_Two : MonoBehaviour
+public class Camera_Switcher : MonoBehaviour
 {
-    public GameObject spotLight;
+    public GameObject activeCam;
+    public GameObject deCam;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            GameObject.Find("Player").GetComponent<PlayerController>().Die();
+            activeCam.SetActive(true);
+            deCam.SetActive(false);
         }
     }
 }

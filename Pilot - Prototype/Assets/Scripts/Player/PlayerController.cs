@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public float runSpeed;
     public float climbSpeed;
+    public float climbRopeSpeed;
     public float sprintSpeed;
     public float sneakSpeed;
     public float jumpHeight;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     public bool sliding = false;
     public bool autoSneaking = false;
     public bool climbing = false;
+    public bool climbingRope = false;
 
     public GameObject gun;
 
@@ -66,20 +68,26 @@ public class PlayerController : MonoBehaviour
         {
             Climb();
         }
-        else
+
+        if (climbingRope == true)
         {
-            gravityScale = 0.9f;
+            ClimbRope();
+        }
+
+        if (!climbing && !climbingRope)
+        {
+            gravityScale = 1f;
         }
 
         if (canMove)
         {
-            if (!climbing)
+            if (!climbing && !climbingRope)
             {
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
             }
 
             //Sprinting
-            if (Input.GetButtonDown("Fire2") && canSprint)
+            if (Input.GetButtonDown("Fire2") && canSprint && !climbing && !climbingRope)
             {
                 sprinting = true;
             }
@@ -143,15 +151,10 @@ public class PlayerController : MonoBehaviour
                 jumping = false;
 
                 //Attack 
-                if (Input.GetKeyDown(KeyCode.RightControl) && canAttack)
+                if (Input.GetButtonDown("Fire4") && canAttack)
                 {
                     Attack();
 
-                }
-
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    Caught();
                 }
 
             }
@@ -159,7 +162,7 @@ public class PlayerController : MonoBehaviour
             //Sneaking 
             if (autoSneaking == false)
             {
-                if (Input.GetButtonDown("Fire1") && !sliding)
+                if (Input.GetButtonDown("Fire1") && !sliding && !climbing && !climbingRope)
                 {
                     sneaking = true;
                     canSprint = false;
@@ -282,6 +285,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ClimbRope()
+    {
+        gravityScale = 0f;
+        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbRopeSpeed, 0);
+
+        canJump = true;
+        transform.localScale = new Vector3(1, 1, 1);
+        animator.SetBool("ClimbingRope", true);
+
+        if (Input.GetButton("Jump"))
+        {
+            climbingRope = false;
+            animator.SetBool("ClimbingRope", false);
+        }
+    }
+
     void AttackDelay()
     {
         canAttack = true;
@@ -305,14 +324,6 @@ public class PlayerController : MonoBehaviour
     {
         controller.height = 3.4f;
         controller.center = new Vector3(0, 0.6f, 0);
-    }
-
-    public void Caught()
-    {
-        animator.SetTrigger("Caught");
-        canMove = false;
-        Invoke("CanMove", 5f);
-        //restart
     }
 
     //Attack point drawer
@@ -353,6 +364,12 @@ public class PlayerController : MonoBehaviour
     {
         animator.enabled = false;
         controller.enabled = false;
+        Invoke("Respawn", 2f);
+    }
+
+    void Respawn()
+    {
+        //GameObject.Find("Player").GetComponent<Checkpoints>().Reload();
     }
 
     void OnTriggerEnter(Collider other)
@@ -361,17 +378,7 @@ public class PlayerController : MonoBehaviour
         {
             gravityScale = 0.2f;
         }
-
-        if (other.tag == ("Caught"))
-        {
-            Caught();
-        }
-
-        if (other.tag == ("Ragdoll"))
-        {
-            animator.enabled = false;
-            controller.enabled = false;
-        }
+        
 
         if (other.tag == ("Die"))
         {
@@ -384,14 +391,14 @@ public class PlayerController : MonoBehaviour
             canAttack = true;
         }
 
-        if (other.tag == ("Wall"))
-        {
-            canJump = false;
-        }
-
         if (other.tag == "AutoSneak")
         {
             AutoSneak();
+        }
+
+        if (other.tag == "Rope")
+        {
+            climbingRope = true;
         }
 
     }
@@ -400,12 +407,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.tag == ("Gravity"))
         {
-            gravityScale = 0.9f;
-        }
-
-        if (other.tag == ("Wall"))
-        {
-            canJump = true;
+            gravityScale = 1f;
         }
 
         if (other.tag == "AutoSneak")
@@ -425,6 +427,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Climbing", false);
         }
 
+        if (other.tag == "Rope")
+        {
+            climbingRope = false;
+            animator.SetBool("ClimbingRope", false);
+        }
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -436,6 +444,7 @@ public class PlayerController : MonoBehaviour
                 climbing = true;
             }
         }
+
     }
 
     void CanMove()

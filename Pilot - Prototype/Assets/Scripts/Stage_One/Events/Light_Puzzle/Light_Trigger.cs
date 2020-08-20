@@ -32,4 +32,15 @@ public class Light_Trigger : MonoBehaviour
     {
         spotLight.SetActive(true);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            if (On)
+            {
+                GameObject.Find("Player").GetComponent<PlayerController>().Die();
+            }
+        }
+    }
 }

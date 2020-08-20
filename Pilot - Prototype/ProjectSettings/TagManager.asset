@@ -5,29 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - Gravity
-  - Sneak
-  - Sprint
-  - Ragdoll
-  - Balance
-  - Ladder
   - Look
   - Walkable
-  - Wall
   - Enemy
   - Climb
-  - Slide
   - Die
   - CheckpointOne
   - CheckpointTwo
   - CheckpointThree
-  - Security
-  - Gun
   - GunTrigger
-  - Push_Truck
-  - truck
-  - Truck
-  - Caught
   - AutoSneak
+  - Rope
+  - CheckpointFour
+  - CheckpointFive
   layers:
   - Default
   - TransparentFX
