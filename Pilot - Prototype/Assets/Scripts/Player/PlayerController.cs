@@ -204,7 +204,11 @@ public class PlayerController : MonoBehaviour
             moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
             controller.Move(moveDirection * Time.deltaTime);
 
-            animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
+            if (!climbing && !climbingRope)
+            {
+                animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Horizontal"))));
+            }
+            
         }
 
 
@@ -272,11 +276,13 @@ public class PlayerController : MonoBehaviour
     void Climb()
     {
         gravityScale = 0f;
-        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbSpeed, 0);
+        moveDirection = new Vector3(0, Input.GetAxis("Vertical") * climbSpeed, 0);
         
         canJump = true;
         transform.localScale = new Vector3(1, 1, 1);
         animator.SetBool("Climbing", true);
+
+        animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical"))));
 
         if (Input.GetButton("Jump"))
         {
@@ -288,11 +294,13 @@ public class PlayerController : MonoBehaviour
     void ClimbRope()
     {
         gravityScale = 0f;
-        moveDirection = new Vector3(0, Input.GetAxis("Horizontal") * climbRopeSpeed, 0);
+        moveDirection = new Vector3(0, Input.GetAxis("Vertical") * climbRopeSpeed, 0);
 
         canJump = true;
         transform.localScale = new Vector3(1, 1, 1);
         animator.SetBool("ClimbingRope", true);
+
+        animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical"))));
 
         if (Input.GetButton("Jump"))
         {
@@ -369,7 +377,7 @@ public class PlayerController : MonoBehaviour
 
     void Respawn()
     {
-        //GameObject.Find("Player").GetComponent<Checkpoints>().Reload();
+        GameObject.Find("Player").GetComponent<Checkpoints>().Reload();
     }
 
     void OnTriggerEnter(Collider other)

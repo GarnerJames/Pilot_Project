@@ -10,6 +10,8 @@ public class Checkpoints : MonoBehaviour
     public GameObject checkpointOne;
     public GameObject checkpointTwo;
     public GameObject checkpointThree;
+    public GameObject checkpointFour;
+    public GameObject checkpointFive;
 
     Animator animator;
     CharacterController controller;
@@ -49,12 +51,12 @@ public class Checkpoints : MonoBehaviour
 
         if (other.tag == "CheckpointFour")
         {
-            playerPos = checkpointThree.transform.position;
+            playerPos = checkpointFour.transform.position;
         }
 
         if (other.tag == "CheckpointFive")
         {
-            playerPos = checkpointThree.transform.position;
+            playerPos = checkpointFive.transform.position;
         }
     }
 
