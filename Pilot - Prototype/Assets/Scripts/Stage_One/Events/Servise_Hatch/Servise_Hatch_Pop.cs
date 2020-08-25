@@ -5,14 +5,19 @@ using UnityEngine;
 public class Servise_Hatch_Pop : MonoBehaviour
 {
     public Animator ani;
-    public GameObject openTrigger;
+    public Animator ladder_ani;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            ani.SetTrigger("Pop_Open");
-            openTrigger.SetActive(true);
+            ani.SetTrigger("Open");
+            Invoke("Ladder", 1f);
         }
+    }
+
+    void Ladder()
+    {
+        ladder_ani.SetTrigger("Drop");
     }
 }

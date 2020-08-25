@@ -15,8 +15,12 @@ public class PlayerController : MonoBehaviour
     public float jumpNumber;
     public float gravityScale;
     public float fallingSpeed;
+    public float fallingStunSpeed;
+    public float fallingKillSpeed;
     public float attackRange = 0.5f;
     public float attackDelay;
+
+    public float yVel;
 
     public float currentZpos;
 
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController controller;
 
     Animator animator;
+    public Animator death_ani;
 
     private Vector3 moveDirection;
 
@@ -63,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
 
         currentZpos = transform.position.z;
+        yVel = controller.velocity.y;
 
         if (climbing == true)
         {
@@ -105,6 +111,8 @@ public class PlayerController : MonoBehaviour
                 Sprint();
             }
 
+            
+
 
             if (controller.isGrounded)
             {
@@ -129,7 +137,6 @@ public class PlayerController : MonoBehaviour
                 }
 
                 
-
                 //Sneak
                 if (sneaking == true)
                 {
@@ -141,7 +148,9 @@ public class PlayerController : MonoBehaviour
 
                 animator.SetBool("Falling", false);
 
-                animator.SetTrigger("Land");
+                
+
+                //land
 
                 animator.SetBool("Jumping", false);
 
@@ -155,6 +164,29 @@ public class PlayerController : MonoBehaviour
                 {
                     Attack();
 
+                }
+
+                if (controller.velocity.y > fallingStunSpeed)
+                {
+                    animator.SetTrigger("Land");
+                }
+                else
+                {
+                    animator.ResetTrigger("Land");
+                }
+
+                if (controller.velocity.y < fallingKillSpeed)
+                {
+                    Die();
+                }
+
+                if (controller.velocity.y <= fallingStunSpeed)
+                {
+                    animator.SetTrigger("Roll");
+                }
+                else
+                {
+                    animator.ResetTrigger("Roll");
                 }
 
             }
@@ -214,8 +246,7 @@ public class PlayerController : MonoBehaviour
 
         if (controller.velocity.y < fallingSpeed)
         {
-            falling = true;
-            
+            falling = true; 
         }
 
         if (controller.velocity.y > 0.5f)
@@ -297,7 +328,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector3(0, Input.GetAxis("Vertical") * climbRopeSpeed, 0);
 
         canJump = true;
-        transform.localScale = new Vector3(1, 1, 1);
+        //transform.localScale = new Vector3(1, 1, 1);
         animator.SetBool("ClimbingRope", true);
 
         animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical"))));
@@ -346,16 +377,26 @@ public class PlayerController : MonoBehaviour
 
     void Sneak()
     {
-        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
-        animator.SetBool("sneaking", true);
-        canJump = false;
+
+        if (!climbing && !climbingRope)
+        {
+            moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sneakSpeed);
+            animator.SetBool("sneaking", true);
+            canJump = false;
+        }
+        
     }
 
     void Sprint()
     {
-        moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
-        animator.SetBool("running", true);
-        sneaking = false;
+
+        if (!climbing && !climbingRope)
+        {
+            moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
+            animator.SetBool("running", true);
+            sneaking = false;
+        }
+        
     }
 
     void AutoSneak()
@@ -371,7 +412,8 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         animator.enabled = false;
-        controller.enabled = false;
+        //controller.enabled = false;
+        death_ani.SetTrigger("Death_Fade");
         Invoke("Respawn", 2f);
     }
 

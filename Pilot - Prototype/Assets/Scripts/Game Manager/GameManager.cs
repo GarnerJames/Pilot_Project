@@ -5,26 +5,70 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public void Begin()
+
+    public GameObject pauseMenu;
+    public GameObject scene_fadeIn;
+    public GameObject prompts;
+
+    private void Start()
     {
-        SceneManager.LoadScene("Character");
+        scene_fadeIn.SetActive(true);
     }
 
     public void Play()
     {
-        SceneManager.LoadScene("Exposition");
+        SceneManager.LoadScene("Stage_One");
     }
 
-    void Quit()
+    public void Quit()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        SceneManager.LoadScene("Main_Menu");
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void Shutdown()
+    {
+        Application.Quit();
+    }
+
+    public void Pause()
+    {
+        if (!pauseMenu.activeInHierarchy)
         {
-            Application.Quit();
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 
-    void Update()
+    public void Prompts()
     {
-       
+        if (!prompts.activeInHierarchy)
+        {
+            prompts.SetActive(true);
+        }
+        else
+        {
+            prompts.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel")) 
+        {
+            Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Prompts();
+        }
+
     }
 }

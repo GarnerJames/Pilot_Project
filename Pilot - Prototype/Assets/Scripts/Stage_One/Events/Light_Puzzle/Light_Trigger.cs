@@ -6,19 +6,23 @@ public class Light_Trigger : MonoBehaviour
 {
     public GameObject spotLight;
 
+    public AudioSource laserSound;
+
     public bool On;
 
     private void Update()
     {
-        if (spotLight.active)
+        if (spotLight.activeInHierarchy)
         {
-            On= true;
+            On = true;
+            laserSound.Play();
             Invoke("LightsOff", 1.5f);
         }
 
-        if (spotLight.active == false)
+        if (spotLight.activeInHierarchy == false)
         {
             On = false;
+            laserSound.Stop();
             Invoke("LightsOn", 2f);
         }
     }
