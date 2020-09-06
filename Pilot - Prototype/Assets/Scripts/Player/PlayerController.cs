@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         if (!climbing && !climbingRope)
         {
-            gravityScale = 1f;
+            gravityScale = 1.2f;
         }
 
         if (canMove)
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
                     Die();
                 }
 
-                if (controller.velocity.y <= fallingStunSpeed)
+                if (controller.velocity.y < fallingStunSpeed)
                 {
                     animator.SetTrigger("Roll");
                 }
@@ -405,6 +405,7 @@ public class PlayerController : MonoBehaviour
         autoSneaking = true;
         sneaking = true;
         canSprint = false;
+        sprinting = false;
         controller.height = 2f;
         controller.center = new Vector3(0, -0.06f, 0);
     }
@@ -412,14 +413,16 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         animator.enabled = false;
+        canMove = false;
         //controller.enabled = false;
-        death_ani.SetTrigger("Death_Fade");
+        //death_ani.SetTrigger("Death_Fade");
         Invoke("Respawn", 2f);
     }
 
     void Respawn()
     {
         GameObject.Find("Player").GetComponent<Checkpoints>().Reload();
+        canMove = true;
     }
 
     void OnTriggerEnter(Collider other)
@@ -444,11 +447,6 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "AutoSneak")
         {
             AutoSneak();
-        }
-
-        if (other.tag == "Rope")
-        {
-            climbingRope = true;
         }
 
     }
@@ -492,6 +490,15 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButtonDown("Fire3"))
             {
                 climbing = true;
+            }
+        }
+
+
+        if (other.tag == "Rope")
+        {
+            if (Input.GetButtonDown("Fire3"))
+            {
+                climbingRope = true;
             }
         }
 

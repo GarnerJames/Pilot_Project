@@ -18,6 +18,8 @@ TagManager:
   - Rope
   - CheckpointFour
   - CheckpointFive
+  - PickUp
+  - Boheamoth
   layers:
   - Default
   - TransparentFX

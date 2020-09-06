@@ -12,7 +12,10 @@ public class AI : MonoBehaviour
 
     //Animator mobani;
 
-    public float mobDistanceRun = 11f;
+    public float mobDistanceRun;
+    public float attackDistance;
+
+    public bool chase = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +27,35 @@ public class AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (distance < mobDistanceRun)
+        if (chase)
         {
-            Vector3 dirToPlayer = transform.position - Player.transform.position;
+            float distance = Vector3.Distance(transform.position, Player.transform.position);
 
-            Vector3 newPos = transform.position - dirToPlayer;
+            if (distance < mobDistanceRun)
+            {
+                Vector3 dirToPlayer = transform.position - Player.transform.position;
 
-            Mob.SetDestination(newPos);
+                Vector3 newPos = transform.position - dirToPlayer;
 
-            //mobani.SetBool("running", true);
+                Mob.SetDestination(newPos);
+
+                //mobani.SetBool("running", true);
+            }
+
+            if (distance < attackDistance)
+            {
+                Attack();
+            }
         }
 
+    }
+
+    void Attack()
+    {
+        //attack animation
+        Player.GetComponent<PlayerController>().Die();
+        chase = false;
+        //reset
     }
 }
