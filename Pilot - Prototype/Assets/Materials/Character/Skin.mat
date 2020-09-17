@@ -245,7 +245,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.6981132, g: 0.5372422, b: 0.3984514, a: 1}
+    - _BaseColor: {r: 0.9433962, g: 0.82096314, b: 0.7164471, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
@@ -261,4 +261,4 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - _UnlitColor: {r: 0.9056604, g: 0.7115842, b: 0.5767177, a: 1}
+    - _UnlitColor: {r: 0.915, g: 0.6961177, b: 0.5525883, a: 1}

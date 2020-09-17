@@ -6,16 +6,11 @@ public class Open_Door_Trigger : MonoBehaviour
 {
     public Animator door;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            if (Input.GetButtonDown("Fire3"))
-            {
-                door.SetTrigger("Open");
-                //Play button sound
-                //Play door open sound
-            }
+            door.SetTrigger("Open");
         }
     }
 }
