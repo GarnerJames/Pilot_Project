@@ -8,6 +8,7 @@ public class AI : MonoBehaviour
 
     private NavMeshAgent Mob;
 
+    public GameObject startLoc;
     public GameObject Player;
 
     //Animator mobani;
@@ -48,6 +49,22 @@ public class AI : MonoBehaviour
                 Attack();
             }
         }
+      
+        if (chase == false)
+        {
+            float distance = Vector3.Distance(transform.position, startLoc.transform.position);
+
+            if (distance < mobDistanceRun)
+            {
+                Vector3 dirToPlayer = transform.position - startLoc.transform.position;
+
+                Vector3 newPos = transform.position - dirToPlayer;
+
+                Mob.SetDestination(newPos);
+
+                //mobani.SetBool("running", true);
+            }
+        }
 
     }
 
@@ -58,4 +75,5 @@ public class AI : MonoBehaviour
         chase = false;
         //reset
     }
+
 }

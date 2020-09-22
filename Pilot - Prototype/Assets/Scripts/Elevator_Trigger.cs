@@ -14,7 +14,7 @@ public class Elevator_Trigger : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire3"))
             {
-                elevator.SetTrigger("Move");
+                elevator.SetTrigger("Down");
                 Player.GetComponent<PlayerController>().canMove = false;
                 Invoke("Move", elevatorMoveTime);
             }

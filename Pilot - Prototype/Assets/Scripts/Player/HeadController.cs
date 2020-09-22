@@ -6,7 +6,7 @@ public class HeadController : MonoBehaviour
 {
 
     protected Animator ani;
-    public bool ikActive = false;
+    public bool ikActive;
     public Transform lookObj = null;
     public float lookWeight = 2f;
 

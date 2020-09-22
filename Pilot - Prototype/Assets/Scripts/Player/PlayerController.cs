@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject attackFX;
     public GameObject gunTip;
+    public GameObject roller;
 
     public LayerMask enemyLayer;
 
@@ -289,7 +290,7 @@ public class PlayerController : MonoBehaviour
 
         canMove = false;
 
-        Invoke("MoveAttackDelay", 0.86f);
+        Invoke("MoveAttackDelay", 0.8f);
 
         Invoke("AttackDelay", attackDelay);
 
@@ -414,14 +415,16 @@ public class PlayerController : MonoBehaviour
     {
         animator.enabled = false;
         canMove = false;
-        //controller.enabled = false;
-        //death_ani.SetTrigger("Death_Fade");
-        Invoke("Respawn", 2f);
+        controller.enabled = false;
+        death_ani.SetTrigger("Death_Fade");
+        Invoke("Respawn", 4f);
     }
 
     void Respawn()
     {
         GameObject.Find("Player").GetComponent<Checkpoints>().Reload();
+        roller.GetComponent<AI>().chase = false;
+        death_ani.ResetTrigger("Death_Fade");
         canMove = true;
     }
 

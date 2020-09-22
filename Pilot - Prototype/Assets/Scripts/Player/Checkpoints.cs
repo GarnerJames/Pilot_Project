@@ -49,15 +49,6 @@ public class Checkpoints : MonoBehaviour
             playerPos = checkpointThree.transform.position;
         }
 
-        if (other.tag == "CheckpointFour")
-        {
-            playerPos = checkpointFour.transform.position;
-        }
-
-        if (other.tag == "CheckpointFive")
-        {
-            playerPos = checkpointFive.transform.position;
-        }
     }
 
     public void Reload()

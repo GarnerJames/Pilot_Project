@@ -6,19 +6,20 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
 
-    public GameObject ragdoll;
-
+    public GameObject brokenVersion;
+    public GameManager gm;
 
     public void TakeDamage()
     {
 
-        Invoke("Die", 0.3f);
+        Invoke("Die", 0.4f);
+        gm.GetComponent<GameManager>().End();
         
     }
 
     void Die()
     {
-        Instantiate(ragdoll, transform.position, transform.rotation);
+        Instantiate(brokenVersion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

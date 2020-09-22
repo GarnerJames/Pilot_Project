@@ -6,24 +6,35 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public GameObject pauseMenu;
+   // public GameObject pauseMenu;
     public GameObject scene_fadeIn;
-    public GameObject prompts;
+    public GameObject player;
+    public GameObject endImage;
+   // public GameObject prompts;
 
     private void Start()
     {
         scene_fadeIn.SetActive(true);
+        //endImage.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Quit();
+        }
     }
 
     public void Play()
     {
-        SceneManager.LoadScene("Stage_One");
+        SceneManager.LoadScene("Final_Demo");
     }
 
     public void Quit()
     {
-        SceneManager.LoadScene("Main_Menu");
-        pauseMenu.SetActive(false);
+        SceneManager.LoadScene("Final_Demo_Main_Menu");
+        //pauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -32,43 +43,16 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void Pause()
+    public void End()
     {
-        if (!pauseMenu.activeInHierarchy)
-        {
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1f;
-        }
+        Invoke("EndImage", 4f);
     }
 
-    public void Prompts()
+    void EndImage()
     {
-        if (!prompts.activeInHierarchy)
-        {
-            prompts.SetActive(true);
-        }
-        else
-        {
-            prompts.SetActive(false);
-        }
+        //player.GetComponent<PlayerController>().canMove = false;
+        endImage.SetActive(true);
+        Invoke("Quit", 6f);
     }
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Cancel")) 
-        {
-            Pause();
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Prompts();
-        }
-
-    }
+    
 }
