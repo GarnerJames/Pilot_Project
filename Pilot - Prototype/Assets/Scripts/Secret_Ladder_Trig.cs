@@ -5,18 +5,18 @@ using UnityEngine;
 public class Secret_Ladder_Trig : MonoBehaviour
 {
     public Animator ladder;
-    public float delayTime;
+    public Animator hatch;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
         {
-            Invoke("LadderDown", delayTime);
+            if (Input.GetButtonDown("Fire3"))
+            {
+                hatch.SetTrigger("Open");
+                ladder.SetTrigger("Down");
+            }
         }
     }
 
-    void LadderDown()
-    {
-        ladder.SetTrigger("Down");
-    }
 }

@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1993961088}
+  doorOpen: {fileID: 0}
 --- !u!65 &29297808
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1449,6 +1450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1940936342}
+  button: {fileID: 0}
+  door_Open: {fileID: 0}
 --- !u!65 &204429487
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7031,6 +7034,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 653172250}
+  button: {fileID: 0}
+  door_Open: {fileID: 0}
 --- !u!65 &824364235
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8350,6 +8355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 891264157}
+  doorOpen: {fileID: 0}
 --- !u!65 &938608738
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10345,6 +10351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1190956804}
+  doorOpen: {fileID: 0}
 --- !u!65 &1062657608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18315,6 +18322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1901423161}
+  doorOpen: {fileID: 0}
 --- !u!65 &1557975169
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22574,12 +22582,12 @@ PrefabInstance:
     - target: {fileID: 795800982947563853, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.97
+      value: -17.36
       objectReference: {fileID: 0}
     - target: {fileID: 795800982947563853, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -293.3
+      value: -291.63
       objectReference: {fileID: 0}
     - target: {fileID: 795800982947563853, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
@@ -22694,12 +22702,12 @@ PrefabInstance:
     - target: {fileID: 795800984049487220, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.97
+      value: -17.36
       objectReference: {fileID: 0}
     - target: {fileID: 795800984049487220, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -293.3
+      value: -291.63
       objectReference: {fileID: 0}
     - target: {fileID: 795800984049487220, guid: f173e11069c47e14193294e2c2a64f23,
         type: 3}
@@ -22847,6 +22855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 763320775}
+  doorOpen: {fileID: 0}
 --- !u!65 &1867514505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23632,6 +23641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1082974369}
+  doorOpen: {fileID: 0}
 --- !u!65 &1902148800
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25376,7 +25386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 408599369}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1998963253

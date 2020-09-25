@@ -10,8 +10,12 @@ public class AI : MonoBehaviour
 
     public GameObject startLoc;
     public GameObject Player;
+    public GameObject Sound;
 
-    //Animator mobani;
+    //public AudioSource rollerSound;
+
+    public Animator mobani;
+    public Animator doorani;
 
     public float mobDistanceRun;
     public float attackDistance;
@@ -22,6 +26,7 @@ public class AI : MonoBehaviour
     void Start()
     {
         Mob = GetComponent<NavMeshAgent>();
+        
         //mobani = GetComponent<Animator>();
     }
 
@@ -31,6 +36,7 @@ public class AI : MonoBehaviour
 
         if (chase)
         {
+
             float distance = Vector3.Distance(transform.position, Player.transform.position);
 
             if (distance < mobDistanceRun)
@@ -41,7 +47,9 @@ public class AI : MonoBehaviour
 
                 Mob.SetDestination(newPos);
 
-                //mobani.SetBool("running", true);
+                mobani.SetTrigger("Chase");
+
+                Sound.SetActive(true);
             }
 
             if (distance < attackDistance)
@@ -62,6 +70,10 @@ public class AI : MonoBehaviour
 
                 Mob.SetDestination(newPos);
 
+                Sound.SetActive(false);
+
+                //rollerSound.Stop();
+
                 //mobani.SetBool("running", true);
             }
         }
@@ -72,6 +84,7 @@ public class AI : MonoBehaviour
     {
         //attack animation
         Player.GetComponent<PlayerController>().Die();
+        doorani.SetBool("Close", true);
         chase = false;
         //reset
     }

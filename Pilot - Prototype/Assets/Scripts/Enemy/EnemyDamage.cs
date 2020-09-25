@@ -8,6 +8,7 @@ public class EnemyDamage : MonoBehaviour
 
     public GameObject brokenVersion;
     public GameManager gm;
+    public AudioSource die;
 
     public void TakeDamage()
     {
@@ -20,6 +21,7 @@ public class EnemyDamage : MonoBehaviour
     void Die()
     {
         Instantiate(brokenVersion, transform.position, transform.rotation);
+        die.Play();
         Destroy(gameObject);
     }
 

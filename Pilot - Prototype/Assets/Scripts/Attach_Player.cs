@@ -5,20 +5,22 @@ using UnityEngine;
 public class Attach_Player : MonoBehaviour
 {
     public GameObject player;
+    public float time;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
         {
             player.transform.parent = transform;
+            player.GetComponent<PlayerController>().canMove = false;
+            Invoke("Done", time);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void Done()
     {
-        if (other.gameObject == player)
-        {
-            player.transform.parent = null;
-        }
+        player.GetComponent<PlayerController>().canMove = true;
+        player.transform.parent = null;
+        gameObject.SetActive(false);
     }
 }
