@@ -6,6 +6,8 @@ public class Secret_Ladder_Trig : MonoBehaviour
 {
     public Animator ladder;
     public Animator hatch;
+    public GameObject blackImage;
+    public GameObject ambientAudio;
 
     private void OnTriggerStay(Collider other)
     {
@@ -13,10 +15,28 @@ public class Secret_Ladder_Trig : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire3"))
             {
-                hatch.SetTrigger("Open");
-                ladder.SetTrigger("Down");
+                PowerOut();
             }
         }
     }
 
+    void PowerOut()
+    {
+        blackImage.SetActive(true);
+        ambientAudio.GetComponent<AudioSource>().enabled = false;
+        Invoke("PowerOn", 4f);
+    }
+
+    void PowerOn()
+    {
+        blackImage.SetActive(false);
+        ambientAudio.GetComponent<AudioSource>().enabled = true;
+        Invoke("Ladder", 2f);
+    }
+
+    void Ladder()
+    {
+        hatch.SetTrigger("Open");
+        ladder.SetTrigger("Down");
+    }
 }

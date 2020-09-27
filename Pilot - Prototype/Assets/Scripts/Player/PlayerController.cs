@@ -223,8 +223,8 @@ public class PlayerController : MonoBehaviour
                     canSprint = true;
                     pushScript.GetComponent<push_script>().canPush = true;
                     animator.SetBool("sneaking", false);
-                    controller.height = 3.4f;
-                    controller.center = new Vector3(0, 0.6f, 0);
+                    controller.height = 3.2f;
+                    controller.center = new Vector3(0, 0.46f, 0);
                 }
             }
 
@@ -367,8 +367,8 @@ public class PlayerController : MonoBehaviour
 
     void SlideDelay()
     {
-        controller.height = 3.4f;
-        controller.center = new Vector3(0, 0.6f, 0);
+        controller.height = 3.2f;
+        controller.center = new Vector3(0, 0.46f, 0);
         sliding = false;
         canSlide = true;
         canJump = true;
@@ -376,8 +376,8 @@ public class PlayerController : MonoBehaviour
 
     void JumpColDelay()
     {
-        controller.height = 3.4f;
-        controller.center = new Vector3(0, 0.6f, 0);
+        controller.height = 3.2f;
+        controller.center = new Vector3(0, 0.46f, 0);
     }
 
     //Attack point drawer
@@ -483,8 +483,8 @@ public class PlayerController : MonoBehaviour
             canJump = true;
             canSprint = true;
             animator.SetBool("sneaking", false);
-            controller.height = 3.4f;
-            controller.center = new Vector3(0, 0.6f, 0);
+            controller.height = 3.2f;
+            controller.center = new Vector3(0, 0.46f, 0);
         }
 
         if (other.tag == "Climb")

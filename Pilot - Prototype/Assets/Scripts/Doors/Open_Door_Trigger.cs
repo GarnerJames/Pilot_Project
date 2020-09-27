@@ -11,9 +11,15 @@ public class Open_Door_Trigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            door.SetTrigger("Open");
+            door.SetBool("Open", true);
             doorOpen.Play();
-            gameObject.SetActive(false);
+            Invoke("Close", 4f);
+            //gameObject.SetActive(false);
         }
+    }
+
+    void Close()
+    {
+        door.SetBool("Open", false);
     }
 }

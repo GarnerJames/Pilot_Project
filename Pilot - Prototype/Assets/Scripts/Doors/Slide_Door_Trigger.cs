@@ -13,7 +13,7 @@ public class Slide_Door_Trigger : MonoBehaviour
         {
             door.SetBool("Open", true);
             doorOpen.Play();
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }
