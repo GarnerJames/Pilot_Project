@@ -5,8 +5,10 @@ using UnityEngine;
 public class Pick_Up_Gun : MonoBehaviour
 {
     public GameObject player;
+    public Animator playerAni;
     public GameObject gun;
     public Animator player_ani;
+    public AudioSource aiVoice;
 
     public float delayTime;
 
@@ -15,6 +17,7 @@ public class Pick_Up_Gun : MonoBehaviour
         if (other.tag == "Player")
         {
             PickUp();
+            playerAni.SetFloat("Speed", 0f);
         }
     }
 
@@ -24,6 +27,7 @@ public class Pick_Up_Gun : MonoBehaviour
         player_ani.SetTrigger("PickUp");
         Invoke("End", delayTime);
         gun.SetActive(false);
+        aiVoice.Play();
     }
 
     void End()

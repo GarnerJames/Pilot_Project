@@ -32,10 +32,22 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Final_Demo_Main_Menu.unity
     guid: d8bd7432cdaa59f439e62e1c0f32e7f4
   - enabled: 1
-    path: Assets/Scenes/Final_Demo.unity
+    path: Assets/Scenes/Main_Menu.unity
+    guid: 905e99473e86e1a4a8dae72e56925751
+  - enabled: 1
+    path: Assets/Scenes/Final_Demo_A.unity
     guid: 31001014d61b767418bb3a1bfeb5f2f8
+  - enabled: 1
+    path: Assets/Scenes/Final_Demo_Second_Scene_A.unity
+    guid: 22492e5340d931040a2b033e8ccfc2cf
+  - enabled: 1
+    path: Assets/Scenes/Final_Demo_B.unity
+    guid: f0ef3b3c875262f4cb88a7e9ab8a2901
+  - enabled: 1
+    path: Assets/Scenes/Final_Demo_Second_Scene_B.unity
+    guid: b133cab99de1fff4282d3956d128fe81
   m_configObjects: {}

@@ -7,7 +7,9 @@ public class Secret_Ladder_Trig : MonoBehaviour
     public Animator ladder;
     public Animator hatch;
     public GameObject blackImage;
-    public GameObject ambientAudio;
+    public GameObject topLight;
+    public AudioSource aiVoice;
+    public float audioTime;
 
     private void OnTriggerStay(Collider other)
     {
@@ -15,7 +17,8 @@ public class Secret_Ladder_Trig : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire3"))
             {
-                PowerOut();
+                aiVoice.Play();
+                Invoke("PowerOut", audioTime);
             }
         }
     }
@@ -23,15 +26,14 @@ public class Secret_Ladder_Trig : MonoBehaviour
     void PowerOut()
     {
         blackImage.SetActive(true);
-        ambientAudio.GetComponent<AudioSource>().enabled = false;
-        Invoke("PowerOn", 4f);
+        Invoke("PowerOn", 2f);
     }
 
     void PowerOn()
     {
         blackImage.SetActive(false);
-        ambientAudio.GetComponent<AudioSource>().enabled = true;
-        Invoke("Ladder", 2f);
+        topLight.GetComponent<Flicker_Light>().enabled = true;
+        Invoke("Ladder", 1f);
     }
 
     void Ladder()

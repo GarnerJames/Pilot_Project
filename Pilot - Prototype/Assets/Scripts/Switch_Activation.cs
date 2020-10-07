@@ -8,6 +8,7 @@ public class Switch_Activation : MonoBehaviour
     public Material lightOn;
     public GameObject onSwitchTrigger;
     public GameObject offSwitchTrigger;
+    public AudioSource button;
 
 
     private void OnTriggerStay(Collider other)
@@ -19,6 +20,7 @@ public class Switch_Activation : MonoBehaviour
                 onSwitchTrigger.SetActive(true);
                 offSwitchTrigger.SetActive(false);
                 switchLight.GetComponent<MeshRenderer>().material = lightOn;
+                button.Play();
             }
         }
     }

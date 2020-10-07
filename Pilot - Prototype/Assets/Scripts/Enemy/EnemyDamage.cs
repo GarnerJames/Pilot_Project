@@ -7,21 +7,19 @@ public class EnemyDamage : MonoBehaviour
 {
 
     public GameObject brokenVersion;
-    public GameManager gm;
-    public AudioSource die;
+    public GameObject aiVoice;
 
     public void TakeDamage()
     {
 
         Invoke("Die", 0.4f);
-        gm.GetComponent<GameManager>().End();
+        aiVoice.GetComponent<aiVoice_trigger_end>().voice();
         
     }
 
     void Die()
     {
         Instantiate(brokenVersion, transform.position, transform.rotation);
-        die.Play();
         Destroy(gameObject);
     }
 

@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     public bool climbingRope = false;
     public bool canFlip = true;
     public bool pushing;
+    public bool facingRight;
 
     public GameObject gun;
 
@@ -224,7 +225,7 @@ public class PlayerController : MonoBehaviour
                     pushScript.GetComponent<push_script>().canPush = true;
                     animator.SetBool("sneaking", false);
                     controller.height = 3.2f;
-                    controller.center = new Vector3(0, 0.46f, 0);
+                    controller.center = new Vector3(0, 0.62f, 0);
                 }
             }
 
@@ -275,11 +276,13 @@ public class PlayerController : MonoBehaviour
             if (transform.position.z < currentZpos)
             {
                 transform.localScale = new Vector3(1, 1, -1);
+                facingRight = false;
             }
 
             if (gameObject.transform.position.z > currentZpos)
             {
                 transform.localScale = new Vector3(1, 1, 1);
+                facingRight = true;
             }
         }
 
@@ -368,7 +371,7 @@ public class PlayerController : MonoBehaviour
     void SlideDelay()
     {
         controller.height = 3.2f;
-        controller.center = new Vector3(0, 0.46f, 0);
+        controller.center = new Vector3(0, 0.62f, 0);
         sliding = false;
         canSlide = true;
         canJump = true;
@@ -377,7 +380,7 @@ public class PlayerController : MonoBehaviour
     void JumpColDelay()
     {
         controller.height = 3.2f;
-        controller.center = new Vector3(0, 0.46f, 0);
+        controller.center = new Vector3(0, 0.62f, 0);
     }
 
     //Attack point drawer
@@ -484,7 +487,7 @@ public class PlayerController : MonoBehaviour
             canSprint = true;
             animator.SetBool("sneaking", false);
             controller.height = 3.2f;
-            controller.center = new Vector3(0, 0.46f, 0);
+            controller.center = new Vector3(0, 0.62f, 0);
         }
 
         if (other.tag == "Climb")

@@ -43,7 +43,7 @@ public class push_script : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.tag == "Player")
+        if (other.tag == "Player" && player.GetComponent<PlayerController>().facingRight)
         {
             if (Input.GetButtonDown("Fire3") && canPush)
             {
@@ -86,5 +86,6 @@ public class push_script : MonoBehaviour
     void Stop()
     {
         ani.SetBool("Pushing", false);
+        ani.SetBool("Pulling", false);
     }
 }

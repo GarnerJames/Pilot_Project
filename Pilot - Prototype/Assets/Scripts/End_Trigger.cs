@@ -5,20 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class End_Trigger : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject farCam;
+    public Animator playerAni;
+    public Animator platform;
+    public AudioSource button;
 
-    public Animator fadeOut;
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            fadeOut.SetTrigger("Death_Fade");
-            Invoke("Quit", 2f);
+            if (Input.GetButtonDown("Fire3"))
+            {
+                player.GetComponent<PlayerController>().canMove = false;
+                player.transform.parent = transform;
+                farCam.SetActive(true);
+                playerAni.SetFloat("Speed", 0f);
+                platform.SetTrigger("Move");
+                button.Play();
+            }
         }
-    }
-
-    void Quit()
-    {
-        SceneManager.LoadScene("Main_Menu");
     }
 }

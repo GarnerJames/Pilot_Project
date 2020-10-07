@@ -6,16 +6,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-   // public GameObject pauseMenu;
+
     public GameObject scene_fadeIn;
     public GameObject player;
     public GameObject endImage;
-   // public GameObject prompts;
+
 
     private void Start()
     {
         scene_fadeIn.SetActive(true);
-        //endImage.SetActive(false);
     }
 
     private void Update()
@@ -28,31 +27,21 @@ public class GameManager : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Final_Demo");
+        SceneManager.LoadScene("Final_Demo_A");
+    }
+
+    public void VersionB()
+    {
+        SceneManager.LoadScene("Final_Demo_B");
     }
 
     public void Quit()
     {
-        SceneManager.LoadScene("Final_Demo_Main_Menu");
-        //pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main_Menu");
     }
 
     public void Shutdown()
     {
         Application.Quit();
     }
-
-    public void End()
-    {
-        Invoke("EndImage", 4f);
-    }
-
-    void EndImage()
-    {
-        //player.GetComponent<PlayerController>().canMove = false;
-        endImage.SetActive(true);
-        Invoke("Quit", 6f);
-    }
-    
 }
