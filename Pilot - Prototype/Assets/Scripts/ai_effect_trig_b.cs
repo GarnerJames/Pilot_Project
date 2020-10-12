@@ -42,6 +42,6 @@ public class ai_effect_trig_b : MonoBehaviour
 
     void EndScene()
     {
-        SceneManager.LoadScene("Final_Demo_Second_Scene_A");
+        SceneManager.LoadScene("Final_Demo_Second_Scene_B");
     }
 }

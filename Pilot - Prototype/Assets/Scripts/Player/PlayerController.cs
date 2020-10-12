@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float attackDelay;
 
     public float yVel;
-
+    public float yPos;
     public float currentZpos;
 
     public GameObject attackFX;
@@ -39,12 +39,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
 
     public static bool sneaking = false;
-    public bool sprinting = false;
     public bool falling = false;
     public bool jumping = false;
     public bool canJump = true;
     public bool canAttack = true;
-    public bool canSprint = true;
     public bool canMove = true;
     public bool canSlide = true;
     public bool sliding = false;
@@ -54,6 +52,8 @@ public class PlayerController : MonoBehaviour
     public bool canFlip = true;
     public bool pushing;
     public bool facingRight;
+    public bool aiming = false;
+    public bool moving;
 
     public GameObject gun;
 
@@ -74,10 +74,12 @@ public class PlayerController : MonoBehaviour
 
         currentZpos = transform.position.z;
         yVel = controller.velocity.y;
+        yPos = transform.position.y;
 
         if (climbing == true)
         {
             Climb();
+
         }
 
         if (climbingRope == true)
@@ -87,12 +89,26 @@ public class PlayerController : MonoBehaviour
 
         if (!climbing && !climbingRope)
         {
-            gravityScale = 1.2f;
+            gravityScale = 1f;
+        }
+
+        if (aiming)
+        {
+            Aim();
+        }
+
+        if (controller.velocity.z != 0)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
         }
 
         if (canMove)
         {
-            if (!climbing && !climbingRope)
+            if (!climbing && !climbingRope && !aiming)
             {
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * runSpeed);
             }
@@ -102,56 +118,43 @@ public class PlayerController : MonoBehaviour
                 moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * pushSpeed);
             }
 
-            //Sprinting
-            if (Input.GetButtonDown("Fire2") && canSprint && !climbing && !climbingRope)
-            {
-                sprinting = true;
-            }
-
-            if (Input.GetButtonUp("Fire2"))
-            {
-                sprinting = false;
-                animator.SetBool("running", false);
-
-            }
-
-            //Sprint
-            if (sprinting == true)
-            {
-                Sprint();
-            }
-
-            if (sprinting == false)
-            {
-                pushScript.GetComponent<push_script>().canPush = true;
-            }
-
-            
-
 
             if (controller.isGrounded)
             {
 
                 
 
-                if (canSlide)
+                if (canSlide && moving)
                 {
-                    if (sprinting)
+                    if (Input.GetButtonDown("Fire1"))
                     {
-                        if (Input.GetButtonDown("Fire1"))
-                        {
-                            animator.SetTrigger("Slide");
-                            sliding = true;
-                            canJump = false;
-                            controller.height = 1f;
-                            controller.center = new Vector3(0, -0.57f, 0);
-                            canSlide = false;
-                            Invoke("SlideDelay", 1f);
-                        }
+                        animator.SetTrigger("Slide");
+                        sliding = true;
+                        canJump = false;
+                        controller.height = 1f;
+                        controller.center = new Vector3(0, -0.6f, 0);
+                        canSlide = false;
+                        Invoke("SlideDelay", 1f);
                     }
                 }
 
-                
+                if (!moving)
+                {
+                    if (Input.GetAxis("Fire5") == 1)
+                    {
+                        aiming = true;
+                    }
+                }
+
+                if (Input.GetAxis("Fire5") == 0)
+                {
+                    aiming = false;
+                    animator.SetBool("Aiming", false);
+                    canJump = true;
+                    canAttack = false;
+                }
+
+
                 //Sneak
                 if (sneaking == true)
                 {
@@ -174,35 +177,15 @@ public class PlayerController : MonoBehaviour
                 falling = false;
                 jumping = false;
 
-                //Attack 
-                if (Input.GetButtonDown("Fire4") && canAttack)
+                if (canAttack)
                 {
-                    Attack();
-
+                    if (Input.GetAxis("Fire4") == 1)
+                    {
+                        Attack();
+                    } 
                 }
 
-                if (controller.velocity.y > fallingStunSpeed)
-                {
-                    animator.SetTrigger("Land");
-                }
-                else
-                {
-                    animator.ResetTrigger("Land");
-                }
-
-                if (controller.velocity.y < fallingKillSpeed)
-                {
-                    Die();
-                }
-
-                if (controller.velocity.y < fallingStunSpeed)
-                {
-                    animator.SetTrigger("Roll");
-                }
-                else
-                {
-                    animator.ResetTrigger("Roll");
-                }
+                animator.SetTrigger("Land");
 
             }
 
@@ -212,7 +195,6 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetButtonDown("Fire1") && !sliding && !climbing && !climbingRope)
                 {
                     sneaking = true;
-                    canSprint = false;
                     controller.height = 2f;
                     controller.center = new Vector3(0, -0.06f, 0);
                 }
@@ -221,7 +203,6 @@ public class PlayerController : MonoBehaviour
                 {
                     sneaking = false;
                     canJump = true;
-                    canSprint = true;
                     pushScript.GetComponent<push_script>().canPush = true;
                     animator.SetBool("sneaking", false);
                     controller.height = 3.2f;
@@ -271,7 +252,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Flip function
-        if (canMove && canFlip)
+        if (canMove && canFlip && !aiming)
         {
             if (transform.position.z < currentZpos)
             {
@@ -307,7 +288,7 @@ public class PlayerController : MonoBehaviour
 
         canMove = false;
 
-        Invoke("MoveAttackDelay", 0.8f);
+        Invoke("MoveAttackDelay", 1f);
 
         Invoke("AttackDelay", attackDelay);
 
@@ -322,14 +303,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void Aim()
+    {
+        canAttack = true;
+        animator.SetBool("Aiming", true);
+        canJump = false;
+
+
+    }
+
     void Climb()
     {
         gravityScale = 0f;
         moveDirection = new Vector3(0, Input.GetAxis("Vertical") * climbSpeed, 0);
-        
         canJump = true;
         transform.localScale = new Vector3(1, 1, 1);
         animator.SetBool("Climbing", true);
+
+        if (Input.GetAxis("Vertical") == -1)
+        {
+            animator.SetFloat("ClimbMultipler", -1f);
+        }
+        else
+        {
+            animator.SetFloat("ClimbMultipler", 1f);
+        }
 
         animator.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical"))));
 
@@ -406,26 +404,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void Sprint()
-    {
-
-        if (!climbing && !climbingRope && !pushing)
-        {
-            moveDirection = new Vector3(0, moveDirection.y, Input.GetAxis("Horizontal") * sprintSpeed);
-            animator.SetBool("running", true);
-            sneaking = false;
-            pushScript.GetComponent<push_script>().canPush = false;
-        }
-        
-    }
-
     void AutoSneak()
     {
 
         autoSneaking = true;
         sneaking = true;
-        canSprint = false;
-        sprinting = false;
         controller.height = 2f;
         controller.center = new Vector3(0, -0.06f, 0);
     }
@@ -462,7 +445,6 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "GunTrigger")
         {
             gun.SetActive(true);
-            canAttack = true;
         }
 
         if (other.tag == "AutoSneak")
@@ -484,7 +466,6 @@ public class PlayerController : MonoBehaviour
             autoSneaking = false;
             sneaking = false;
             canJump = true;
-            canSprint = true;
             animator.SetBool("sneaking", false);
             controller.height = 3.2f;
             controller.center = new Vector3(0, 0.62f, 0);
